@@ -1,0 +1,489 @@
+title: Many-task pipelines
+description: Split-apply-combine paradigm and our USGS Data Science Branch implementations
+template:
+  repo: ds-pipelines-3-template
+  name: ds-pipelines-3
+before:
+  - type: createIssue
+    title: Recognize the unique demands of data-rich pipelines
+    body: 00-overview.md
+    store:
+      url_00: '{{ result.data.html_url }}'
+steps:
+  - title: Get the big picture
+    description: Recognize the unique demands of data-rich pipelines
+    link: '{{ store.url_00 }}'
+    event: issues.assigned
+    actions:
+      - type: respond
+        with: 01-setup-repo.md
+        store:
+          setup_repo_url: '{{ result.data.html_url }}'
+  - title: Set up your local repo
+    description: Git clone the repo to your computer
+    link: '{{ store.setup_repo_url }}'
+    event: issues.closed
+    actions:
+      - type: respond
+        with: zz-next-issue.md
+      - type: createIssue
+        title: Meet the example problem
+        body: 10-no-table.md
+        comments:
+          - zz-start-branch.md
+        data:
+          branch: three-states
+        store:
+          url_10: '{{ result.data.html_url }}'
+          issue_num_10: '{{ result.data.number }}'
+  - title: Meet the example problem
+    description: Prepare to download and plot information about USGS's oldest streamflow gages
+    link: '{{ store.url_10 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 11-explore-pipeline.md
+        store:
+          url_11: '{{ result.data.html_url }}'
+  - title: Explore the starter pipeline
+    description: Inspect and run the existing pipeline
+    link: '{{ store.url_11 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 12-explore-purrr.md
+        store:
+          url_12: '{{ result.data.html_url }}'
+  - title: Spot the split-apply-combine
+    description: 'Meet `purrr::map_df()`'
+    link: '{{ store.url_12 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 13-state-by-state.md
+        store:
+          url_13: '{{ result.data.html_url }}'
+  - title: Add data targets for each state
+    description: Create a many-task remakefile the hard way
+    link: '{{ store.url_13 }}'
+    event: pull_request.opened
+    actions:
+      - type: respond
+        with: 14-retro.md
+        data:
+          issue_num: '{{ store.issue_num_10 }}'
+        store:
+          url_14: '{{ result.data.html_url }}'
+  - title: Get your PR reviewed
+    description: Run your changes and questions by a human reviewer
+    link: '{{ store.url_14 }}'
+    event: pull_request.closed
+    actions:
+      - type: gate
+        left: '%payload.pull_request.merged%'
+        else:
+          - type: respond
+            with: zz-merge-me.md
+      - type: respond
+        with: zz-next-issue.md
+      - type: closeIssue
+        issue: '{{ store.issue_num_10 }}'
+      - type: createFile
+        filename: 21-123_state_tasks.R
+        new_name: 123_state_tasks.R
+        branch: master
+      - type: createIssue
+        title: Task tables
+        body: 20-task-table.md
+        comments:
+          - zz-start-branch.md
+        store:
+          url_20: '{{ result.data.html_url }}'
+          issue_num_20: '{{ result.data.number }}'
+          branch_20: 'task-table'
+        data:
+          branch: task-table
+  - title: Task tables
+    description: "Learn about scipiper's task table concept and implementation"
+    link: '{{ store.url_20 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 21-rows-columns.md
+        data:
+          branch: '{{ store.branch_20 }}'
+        store:
+          url_21: '{{ result.data.html_url }}'
+  - title: Plan rows and columns
+    description: Define the rows and columns of your task table
+    link: '{{ store.url_21 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 22-task-plan.md
+        store:
+          url_22: '{{ result.data.html_url }}'
+  - title: Make the task plan
+    description: Create an R list object describing your plan
+    link: '{{ store.url_22 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 23-task-remakefile.md
+        store:
+          url_23: '{{ result.data.html_url }}'
+  - title: Make the task remakefile
+    description: Write a YAML file describing your plan
+    link: '{{ store.url_23 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 24-parent-target.md
+        store:
+          url_24: '{{ result.data.html_url }}'
+  - title: Connect to the main pipeline
+    description: Connect the task remakefile to remake.yml
+    link: '{{ store.url_24 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 25-problems-remain.md
+        store:
+          url_25: '{{ result.data.html_url }}'
+  - title: Strive for perfection
+    description: Note two more problems; fix one
+    link: '{{ store.url_25 }}'
+    event: pull_request.opened
+    actions:
+      - type: respond
+        with: zz-get-reviewed.md
+        data:
+          issue: '{{ store.issue_num_20 }}'
+        store:
+          pr_25: '{{ payload.pull_request.number }}'
+  - title: Merge your task remakefile PR
+    description: Respond to comments and then merge your PR
+    link: '{{ store.pr_25 }}'
+    event: pull_request.closed
+    actions:
+      - type: gate
+        left: '{{ payload.pull_request.merged }}'
+        else:
+          - type: respond
+            with: zz-merge-me.md
+      - type: respond
+        with: zz-next-issue.md
+      - type: closeIssue
+        issue: '{{ store.issue_num_20 }}'
+      - type: createIssue
+        title: Splitters
+        body: 30-about-splitters.md
+        comments:
+          - zz-start-branch.md
+        store:
+          url_30: '{{ result.data.html_url }}'
+          issue_num_30: '{{ result.data.number }}'
+        data:
+          branch: splitter
+  - title: Splitters
+    description: 'Learn when and how to break the "one function, one output" rule'
+    link: '{{ store.url_30 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 31-go-bananas.md
+        store:
+          url_31: '{{ result.data.html_url }}'
+  - title: Create an inventory splitter
+    description: Split the inventory into separate state-specific files
+    link: '{{ store.url_31 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 32-connect-splitter.md
+        store:
+          url_32: '{{ result.data.html_url }}'
+  - title: Add the splitter to the main pipeline
+    description: Note two more problems; fix one
+    link: '{{ store.url_32 }}'
+    event: pull_request.opened
+    actions:
+      - type: respond
+        with: zz-get-reviewed.md
+        data:
+          issue: '{{ store.issue_num_30 }}'
+        store:
+          pr_32: '{{ payload.pull_request.number }}'
+  - title: Merge your splitters PR
+    description: Respond to comments and then merge your PR
+    link: '{{ store.pr_32 }}'
+    event: pull_request.closed
+    actions:
+      - type: gate
+        left: '{{ payload.pull_request.merged }}'
+        else:
+          - type: respond
+            with: zz-merge-me.md
+      - type: respond
+        with: zz-next-issue.md
+      - type: closeIssue
+        issue: '{{ store.issue_num_30 }}'
+      - type: createFile
+        filename: 40-tally_site_obs.R
+        new_name: 2_process/src/tally_site_obs.R
+        branch: master
+      - type: createFile
+        filename: 40-plot_site_data.R
+        new_name: 3_visualize/src/plot_site_data.R
+        branch: master
+      - type: createIssue
+        title: Appliers
+        body: 40-more-appliers.md
+        comments:
+          - zz-start-branch.md
+        store:
+          url_40: '{{ result.data.html_url }}'
+          issue_num_40: '{{ result.data.number }}'
+        data:
+          branch: appliers
+  - title: Goals for adding appliers
+    description: Check out some learning opportunities
+    link: '{{ store.url_40 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 41-plot-tally.md
+        store:
+          url_41: '{{ result.data.html_url }}'
+  - title: Add plots and tallies
+    description: Expand the task table to include three steps
+    link: '{{ store.url_41 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 42-answers.md
+        store:
+          url_42: '{{ result.data.html_url }}'
+  - title: Check your answers and admire tidyverse
+    description: Spot the split-apply-combine in a tidyverse expression
+    link: '{{ store.url_42 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 43-force-TRUE.md
+        store:
+          url_43: '{{ result.data.html_url }}'
+  - title: Revise and rebuild
+    description: What happens if you revise the plotting function?
+    link: '{{ store.url_43 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 44-less-force.md
+        store:
+          url_44: '{{ result.data.html_url }}'
+  - title: Use less force
+    description: When is it appropriate to use force=TRUE?
+    link: '{{ store.url_44 }}'
+    event: pull_request.opened
+    actions:
+      - type: respond
+        with: zz-get-reviewed.md
+        data:
+          issue: '{{ store.issue_num_40 }}'
+        store:
+          pr_44: '{{ payload.pull_request.number }}'
+  - title: Merge your appliers PR
+    description: Respond to comments and then merge your PR
+    link: '{{ store.pr_44 }}'
+    event: pull_request.closed
+    actions:
+      - type: gate
+        left: '{{ payload.pull_request.merged }}'
+        else:
+          - type: respond
+            with: zz-merge-me.md
+      - type: respond
+        with: zz-next-issue.md
+      - type: closeIssue
+        issue: '{{ store.issue_num_40 }}'
+      - type: createFile
+        filename: 50-plot_data_coverage.R
+        new_name: 3_visualize/src/plot_data_coverage.R
+        branch: master
+      - type: createFile
+        filename: 50-map_timeseries.R
+        new_name: 3_visualize/src/map_timeseries.R
+        branch: master
+      - type: createIssue
+        title: Combiners
+        body: 50-combiners.md
+        comments:
+          - zz-start-branch.md
+        store:
+          url_50: '{{ result.data.html_url }}'
+          issue_num_50: '{{ result.data.number }}'
+        data:
+          branch: combiners
+  - title: Combiners
+    description: Learn when and how to combine results from task-steps
+    link: '{{ store.url_50 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 51-code-a-combiner.md
+        store:
+          url_51: '{{ result.data.html_url }}'
+  - title: Add a data combiner
+    description: Combine the state tallies into one
+    link: '{{ store.url_51 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 52-as_promises.md
+        store:
+          url_52: '{{ result.data.html_url }}'
+  - title: Discover as_promises
+    description: Learn nuances and solutions for combiner target names
+    link: '{{ store.url_52 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 53-use-downstream.md
+        store:
+          url_53: '{{ result.data.html_url }}'
+  - title: Use the combiner downstream
+    description: Make a plot from the combined data
+    link: '{{ store.url_53 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 54-add-another.md
+        store:
+          url_54: '{{ result.data.html_url }}'
+  - title: Add a summary combiner
+    description: Summarize the state plots in one YAML file
+    link: '{{ store.url_54 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 55-summary-target.md
+        store:
+          url_55: '{{ result.data.html_url }}'
+  - title: Connect both combiners to the pipline
+    description: Solve a one-function, two-target problem
+    link: '{{ store.url_55 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 56-html-target.md
+        data:
+          branch: combiners
+        store:
+          url_56: '{{ result.data.html_url }}'
+  - title: Use the summary combiner downstream
+    description: Make a leaflet map of sites and timeseries data
+    link: '{{ store.url_56 }}'
+    event: pull_request.opened
+    actions:
+      - type: respond
+        with: zz-get-reviewed.md
+        data:
+          issue: '{{ store.issue_num_50 }}'
+        store:
+          pr_56: '{{ payload.pull_request.number }}'
+  - title: Merge your combiners PR
+    description: Respond to comments and then merge your PR
+    link: '{{ store.pr_56 }}'
+    event: pull_request.closed
+    actions:
+      - type: gate
+        left: '{{ payload.pull_request.merged }}'
+        else:
+          - type: respond
+            with: zz-merge-me.md
+      - type: respond
+        with: zz-next-issue.md
+      - type: closeIssue
+        issue: '{{ store.issue_num_50 }}'
+      - type: createIssue
+        title: Scale up
+        body: 60-capstone.md
+        comments:
+          - zz-start-branch.md
+        store:
+          url_60: '{{ result.data.html_url }}'
+          issue_num_60: '{{ result.data.number }}'
+        data:
+          branch: scale-up
+  - title: Capstone overview
+    description: Prepare to expand your pipeline
+    link: '{{ store.url_60 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 61-expand-states.md
+        store:
+          url_61: '{{ result.data.html_url }}'
+  - title: Scale up
+    description: Expand your pipeline to many more states
+    link: '{{ store.url_61 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 62-loop_tasks.md
+        store:
+          url_62: '{{ result.data.html_url }}'
+  - title: Discover loop_tasks()
+    description: 'Try out `loop_tasks()` for building tasks tables'
+    link: '{{ store.url_62 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 63-repurpose-pipeline.md
+        data:
+          current-branch: scale-up
+          new-branch: temperature
+        store:
+          url_63: '{{ result.data.html_url }}'
+  - title: Reuse your pipeline
+    description: Repurpose your pipeline for temperature data
+    link: '{{ store.url_63 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 64-loop-tricks.md
+        data:
+          first-branch: scale-up
+          second-branch: temperature
+        store:
+          url_64: '{{ result.data.html_url }}'
+  - title: Wrap up
+    description: Retrospect and get feedback on your two repo branches
+    link: '{{ store.url_64 }}'
+    event: pull_request.opened
+    actions:
+      - type: respond
+        with: zz-get-reviewed.md
+        data:
+          issue: '{{ store.issue_num_60 }}'
+        store:
+          pr_64: '{{ payload.pull_request.number }}'
+  - title: Merge your capstone PR
+    description: Respond to comments and then merge your PR
+    link: '{{ store.pr_64 }}'
+    event: pull_request.closed
+    actions:
+      - type: gate
+        left: '{{ payload.pull_request.merged }}'
+        else:
+          - type: respond
+            with: zz-merge-me.md
+      - type: respond
+        with: zz-next-issue.md
+      - type: closeIssue
+        issue: '{{ store.issue_num_60 }}'
+      - type: createIssue
+        title: >-
+          What's next
+        body: 90-whats-next.md
