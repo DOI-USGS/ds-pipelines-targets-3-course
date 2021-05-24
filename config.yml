@@ -64,7 +64,7 @@ steps:
         store:
           url_13: '{{ result.data.html_url }}'
   - title: Add data targets for each state
-    description: Create a many-task remakefile the hard way
+    description: Create a many-task makefile the hard way
     link: '{{ store.url_13 }}'
     event: pull_request.opened
     actions:
@@ -91,7 +91,7 @@ steps:
       - type: createFile
         filename: 21-123_state_tasks.R
         new_name: 123_state_tasks.R
-        branch: master
+        branch: main
       - type: createIssue
         title: Task tables
         body: 20-task-table.md
@@ -231,11 +231,11 @@ steps:
       - type: createFile
         filename: 40-tally_site_obs.R
         new_name: 2_process/src/tally_site_obs.R
-        branch: master
+        branch: main
       - type: createFile
         filename: 40-plot_site_data.R
         new_name: 3_visualize/src/plot_site_data.R
-        branch: master
+        branch: main
       - type: createIssue
         title: Appliers
         body: 40-more-appliers.md
@@ -310,11 +310,11 @@ steps:
       - type: createFile
         filename: 50-plot_data_coverage.R
         new_name: 3_visualize/src/plot_data_coverage.R
-        branch: master
+        branch: main
       - type: createFile
         filename: 50-map_timeseries.R
         new_name: 3_visualize/src/map_timeseries.R
-        branch: master
+        branch: main
       - type: createIssue
         title: Combiners
         body: 50-combiners.md

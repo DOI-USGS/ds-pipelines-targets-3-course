@@ -34,8 +34,8 @@ The nice thing about this function is that it doesn't take time to rebuild or ev
 
 Phew, what a lot you've learned in this course! Let's get your work onto GitHub.
 
-- [ ] Commit your code changes for the temperature analysis, remembering to commit to the new branch ("{{ second-branch }}"). Push your changes to GitHub. You won't make a PR for this branch - it can just live on as an alternative to the "master" branch that documents the changes needed to analyze temperature instead of discharge.
+- [ ] Commit your code changes for the temperature analysis, remembering to commit to the new branch ("{{ second-branch }}"). Push your changes to GitHub. You won't make a PR for this branch - it can just live on as an alternative to the "main" branch that documents the changes needed to analyze temperature instead of discharge.
 
-- [ ] Create a PR to merge the "{{ first-branch }}" branch into "master". In the PR description, post your favorite figure produced during the course and any other observations you want to share.
+- [ ] Create a PR to merge the "{{ first-branch }}" branch into "main". In the PR description, post your favorite figure produced during the course and any other observations you want to share.
 
 <hr><h3 align="center">I'll respond when I see your PR.</h3>

@@ -23,6 +23,6 @@ It's finally time to submit your work.
 
 - [ ] Commit your code changes for this issue and make sure you're `.gitignore`ing the new analysis products (the .png and .html files). Push your changes to the GitHub repo.
 
-- [ ] Create a PR to merge the "{{ branch }}" branch into "master". Share a screenshot of *3_visualize/out/timeseries_map.html* and any thoughts you want to share in the PR description. 
+- [ ] Create a PR to merge the "{{ branch }}" branch into "main". Share a screenshot of *3_visualize/out/timeseries_map.html* and any thoughts you want to share in the PR description. 
 
 <hr><h3 align="center">I'll respond when I see your PR.</h3>

@@ -1,4 +1,4 @@
-To get you started with coding, I've added a new file to the master branch (which you should have already pulled into your "{{ branch }}" branch) called *123_state_tasks.R*. This is the file where you'll write code to split a body of work into tasks, apply operations to each task, and combine the results back into end products.
+To get you started with coding, I've added a new file to the main branch (which you should have already pulled into your "{{ branch }}" branch) called *123_state_tasks.R*. This is the file where you'll write code to split a body of work into tasks, apply operations to each task, and combine the results back into end products.
 
 ### Design decisions
 
