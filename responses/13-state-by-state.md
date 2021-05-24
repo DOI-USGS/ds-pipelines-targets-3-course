@@ -2,7 +2,7 @@
 
 Awesome, time for your first code changes :pencil2:.
 
-- [ ] Write three **targets** target in *_targets.R* to apply `get_site_data()` to each state in `states`. The targets should be named `wi_data`, `mn_data`, and `mi_data`.
+- [ ] Write three targets in *_targets.R* to apply `get_site_data()` to each state in `states` (insert these new targets under the `# TODO: PULL SITE DATA HERE` placeholder in `_targets.R`). The targets should be named `wi_data`, `mn_data`, and `mi_data`.
 
 - [ ] Add a call to `source()` near the top of *_targets.R* as needed to make your pipeline executable.
 
