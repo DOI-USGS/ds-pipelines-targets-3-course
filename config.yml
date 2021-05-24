@@ -1,8 +1,8 @@
-title: Many-task pipelines
-description: Split-apply-combine paradigm and our USGS Data Science Branch implementations
+title: Many-task pipelines using targets
+description: Split-apply-combine paradigm and our USGS Data Science Branch implementations using targets
 template:
-  repo: ds-pipelines-3-template
-  name: ds-pipelines-3
+  repo: ds-pipelines-targets-3-template
+  name: ds-pipelines-targets-3
 before:
   - type: createIssue
     title: Recognize the unique demands of data-rich pipelines
