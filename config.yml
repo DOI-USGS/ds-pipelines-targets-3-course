@@ -370,7 +370,7 @@ steps:
         with: 55-summary-target.md
         store:
           url_55: '{{ result.data.html_url }}'
-  - title: Connect both combiners to the pipline
+  - title: Connect both combiners to the pipeline
     description: Solve a one-function, two-target problem
     link: '{{ store.url_55 }}'
     event: issue_comment.created
