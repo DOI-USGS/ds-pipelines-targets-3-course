@@ -93,8 +93,8 @@ steps:
         new_name: 123_state_tasks.R
         branch: main
       - type: createIssue
-        title: Task tables
-        body: 20-task-table.md
+        title: Branching
+        body: 20-branching.md
         comments:
           - zz-start-branch.md
         store:
@@ -103,19 +103,19 @@ steps:
           branch_20: 'task-table'
         data:
           branch: task-table
-  - title: Task tables
-    description: "Learn about scipiper's task table concept and implementation"
+  - title: Branching
+    description: "Learn about scaling a pipeline to handle many tasks"
     link: '{{ store.url_20 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 21-rows-columns.md
+        with: 21-dynamic-static-branching.md
         data:
           branch: '{{ store.branch_20 }}'
         store:
           url_21: '{{ result.data.html_url }}'
-  - title: Plan rows and columns
-    description: Define the rows and columns of your task table
+  - title: Plan your branching approach
+    description: Learn about dynamic vs static branching
     link: '{{ store.url_21 }}'
     event: issue_comment.created
     actions:
