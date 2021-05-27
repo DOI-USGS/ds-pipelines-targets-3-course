@@ -88,10 +88,6 @@ steps:
         with: zz-next-issue.md
       - type: closeIssue
         issue: '{{ store.issue_num_10 }}'
-      - type: createFile
-        filename: 21-123_state_tasks.R
-        new_name: 123_state_tasks.R
-        branch: main
       - type: createIssue
         title: Branching
         body: 20-branching.md
@@ -100,9 +96,9 @@ steps:
         store:
           url_20: '{{ result.data.html_url }}'
           issue_num_20: '{{ result.data.number }}'
-          branch_20: 'task-table'
+          branch_20: 'static-branching'
         data:
-          branch: task-table
+          branch: static-branching
   - title: Branching
     description: "Learn about scaling a pipeline to handle many tasks"
     link: '{{ store.url_20 }}'
@@ -120,11 +116,11 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 22-task-plan.md
+        with: 22-implement-branching.md
         store:
           url_22: '{{ result.data.html_url }}'
-  - title: Make the task plan
-    description: Create an R list object describing your plan
+  - title: Implement static branching
+    description: Create an R tibble object to define configs per task
     link: '{{ store.url_22 }}'
     event: issue_comment.created
     actions:
