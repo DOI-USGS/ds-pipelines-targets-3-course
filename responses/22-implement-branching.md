@@ -7,7 +7,7 @@ tar_target(mn_data, get_site_data(oldest_active_sites, states[2], parameter)),
 tar_target(mi_data, get_site_data(oldest_active_sites, states[3], parameter)),
 ```
 
-We are going to convert the code for those targets into static branching. Let's get started!
+We are going to convert the code for those targets into static branching. We are going to make these changes on the "{{ branch }}" branch that we created earlier. Let's get started!
 
 ### :keyboard: Activity: Implement static branching to download data by state
 
@@ -26,16 +26,16 @@ To get started, copy the code below and replace your 3 individual state targets 
 
 ```r
 tar_map(
-  values = tasks,
-  tar_target(data, get_site_data(oldest_active_sites, states, parameter))
+  values = tibble(state_abb = states),
+  tar_target(data, get_site_data(oldest_active_sites, state_abb, parameter))
   # Insert step for tallying data here
   # Insert step for plotting data here
 ),
 ```
 
-#### Set up your tasks
+#### Verify your task values
 
-Now, you need to create an object called `tasks` to pass in for the argument `values`. This object can be a list or a data.frame/tibble and the names of the list elements or columns are used as arguments to the functions in your steps. To match the prefilled code for the `get_site_data` step, you should replace `states <- c('WI', 'MN', 'MI')` with `tasks <- tibble(states = c('WI', 'MN', 'MI'))`.
+This is already set up for you, but is worth going over. Your task names are passed into `tar_map()` using the argument `values`. This argument will accept a list or a data.frame/tibble and the names of the list elements or columns are used as arguments to the functions in your steps. Rather than change the `states` object outside of `tar_map()` (because that would require us to also update `oldest_active_sites` which uses `states`), we are using that vector to create a column called `state_abb` in the `tibble` passed to `values`. That means, when we need to pass in the task names as an argument to a function, we use `state_abb`, the column name containing those task names.
 
 #### Check your progress
 

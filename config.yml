@@ -117,6 +117,8 @@ steps:
     actions:
       - type: respond
         with: 22-implement-branching.md
+        data:
+          branch: '{{ store.branch_20 }}'
         store:
           url_22: '{{ result.data.html_url }}'
   - title: Implement static branching
