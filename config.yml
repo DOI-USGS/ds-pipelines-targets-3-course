@@ -127,30 +127,23 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 23-task-remakefile.md
+        with: 23-build-pipeline.md
         store:
           url_23: '{{ result.data.html_url }}'
-  - title: Make the task remakefile
-    description: Write a YAML file describing your plan
+  - title: Test your pipeline
+    description: Practice running your pipeline with static branching enabled
     link: '{{ store.url_23 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 24-parent-target.md
+        with: 24-problems-remain.md
+        data:
+          branch: '{{ store.branch_20 }}'
         store:
           url_24: '{{ result.data.html_url }}'
-  - title: Connect to the main pipeline
-    description: Connect the task remakefile to remake.yml
-    link: '{{ store.url_24 }}'
-    event: issue_comment.created
-    actions:
-      - type: respond
-        with: 25-problems-remain.md
-        store:
-          url_25: '{{ result.data.html_url }}'
   - title: Strive for perfection
-    description: Note two more problems; fix one
-    link: '{{ store.url_25 }}'
+    description: Note one more problem
+    link: '{{ store.url_24 }}'
     event: pull_request.opened
     actions:
       - type: respond
@@ -158,10 +151,10 @@ steps:
         data:
           issue: '{{ store.issue_num_20 }}'
         store:
-          pr_25: '{{ payload.pull_request.number }}'
-  - title: Merge your task remakefile PR
+          pr_24: '{{ payload.pull_request.number }}'
+  - title: Merge your static branching PR
     description: Respond to comments and then merge your PR
-    link: '{{ store.pr_25 }}'
+    link: '{{ store.pr_24 }}'
     event: pull_request.closed
     actions:
       - type: gate
