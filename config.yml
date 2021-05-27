@@ -247,7 +247,7 @@ steps:
         store:
           url_41: '{{ result.data.html_url }}'
   - title: Add plots and tallies
-    description: Expand the task table to include three steps
+    description: Expand the state branching to include three steps
     link: '{{ store.url_41 }}'
     event: issue_comment.created
     actions:

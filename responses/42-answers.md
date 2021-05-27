@@ -6,25 +6,24 @@ _* an image from one of the new plots in *3_visualize/out*, and_
 
 ![timeseries_WI](https://user-images.githubusercontent.com/12039957/82912759-71d6a280-9f3b-11ea-8e89-381ab350aeca.png)
 
-_* a printout of the first 10 lines of `IN_tally`_
+_* a printout of the first 10 lines of `IL_tally`_
 
 ```r
-> IN_tally
-# A tibble: 110 x 4
+> head(tally_IL, 10)
+# A tibble: 10 x 4
 # Groups:   Site, State [1]
    Site     State  Year NumObs
    <chr>    <chr> <dbl>  <int>
- 1 03373500 IN     1903     92
- 2 03373500 IN     1904    366
- 3 03373500 IN     1905    365
- 4 03373500 IN     1906     90
- 5 03373500 IN     1909    275
- 6 03373500 IN     1910    365
- 7 03373500 IN     1911    365
- 8 03373500 IN     1912    366
- 9 03373500 IN     1913    365
-10 03373500 IN     1914    365
-# … with 100 more rows
+ 1 05572000 IL     1908    332
+ 2 05572000 IL     1909    365
+ 3 05572000 IL     1910    365
+ 4 05572000 IL     1911    365
+ 5 05572000 IL     1912    337
+ 6 05572000 IL     1914    192
+ 7 05572000 IL     1915    365
+ 8 05572000 IL     1916    366
+ 9 05572000 IL     1917    365
+10 05572000 IL     1918    365
 ```
 
 ### :keyboard: Activity: Spot the split-apply-combine (again)
