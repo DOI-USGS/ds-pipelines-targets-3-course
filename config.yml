@@ -261,7 +261,7 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 43-force-TRUE.md
+        with: 43-revise-rebuild.md
         store:
           url_43: '{{ result.data.html_url }}'
   - title: Revise and rebuild
@@ -270,11 +270,11 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 44-less-force.md
+        with: 44-skipping-power.md
         store:
           url_44: '{{ result.data.html_url }}'
-  - title: Use less force
-    description: When is it appropriate to use force=TRUE?
+  - title: Pipeline strategy in action
+    description: See your hard work in action as the pipeline skips rebuilding everything but the plots
     link: '{{ store.url_44 }}'
     event: pull_request.opened
     actions:
