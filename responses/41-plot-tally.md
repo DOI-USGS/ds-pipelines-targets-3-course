@@ -21,6 +21,8 @@ tibble(state_abb = states) %>%
 
 - [ ] Speaking of packages, we added `%>%` and `mutate` to `_targets.R` in order to add a new column to our task tibble. These are made available by the `dplyr` package which is included in `tidyverse`, and while `tidyverse` is loaded in `tar_option_set()`, it is not loaded when the top-level makefile is run. So, we need to add `library(dplyr)` to the top of `_targets.R`.
 
+- [ ] Now that we have added an additional column in `values`, we have less certainty about what `tar_map()` will use as the suffix when naming branch targets. To control what is used as the suffix, you can specify what part of `values` to use by passing in the column name to the `names` argument within `tar_map()`. This guarantees that `_WI`, `_MN`, etc will be used and not the long image filenames (that could get messy!). Go ahead and add `names = state_abb` as the final argument to `tar_map()`.
+
 #### Test
 
 - [ ] Run `tar_make()`. Is it building a timeseries plot and a `tally` object for each state? If not, keep fiddling with your code until you get it to work.
