@@ -413,11 +413,11 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 62-loop_tasks.md
+        with: 62-fault-tolerance.md
         store:
           url_62: '{{ result.data.html_url }}'
-  - title: Discover loop_tasks()
-    description: 'Try out `loop_tasks()` for building tasks tables'
+  - title: No more babysitting the pipeline build
+    description: 'Discover approaches for building fault tolerant pipelines'
     link: '{{ store.url_62 }}'
     event: issue_comment.created
     actions:
