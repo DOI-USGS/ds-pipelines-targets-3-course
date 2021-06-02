@@ -12,7 +12,7 @@ The above notes are really just intended to raise your awareness about complicat
 
 ### :keyboard: Activity: Repurpose the pipeline
 
-- [ ] Make a copy of your whole local repo folder. You can just use standard file copying methods (File Explorer, `cp`, whatever you want). Name this new top-level folder "ds-pipelines-3-temperature". Open a new RStudio session with "ds-pipelines-3-temperature" as the project.
+- [ ] Make a copy of your whole local repo folder. You can just use standard file copying methods (File Explorer, `cp`, whatever you want). Name this new top-level folder "ds-pipelines-targets-3-temperature". Open a new RStudio session with "ds-pipelines-targets-3-temperature" as the project.
 
 - [ ] Create a second local branch, this time called "{{ new-branch }}", and push this new branch up to the remote location "origin". Check to make sure you're already on the "{{ current-branch }}" branch (e.g., with `git status` or by looking at the Git tab in RStudio), and then:
   ```
@@ -20,13 +20,17 @@ The above notes are really just intended to raise your awareness about complicat
   git push -u origin {{ new-branch }}
   ```
 
-- [ ] Change the parameter code (`parameter` in *remake.yml*) from `00060` (flow) to `00010` (water temperature).
+- [ ] Change the parameter code (`parameter` in *_targets.R*) from `00060` (flow) to `00010` (water temperature).
 
-- [ ] Remove 'VT' and 'GU' from the `states` target in *remake.yml*. It turns out that NWIS returns errors for these two states/territories for temperature, so we'll just skip them.
+- [ ] Remove 'VT' and 'GU' from the `states` target in *_targets.R*. It turns out that NWIS returns errors for these two states/territories for temperature, so we'll just skip them.
 
 #### Test
 
-- [ ] Run `library(scipiper)` (because you're in a new R session) and then `scmake()`. Note the different console messages this time.
+- [ ] Run `library(targets)` (because you're in a new R session).
+
+- [ ] Load the `retry_tar_make()` function into your local environment by copying the code from the *README.md* file and running in your console. 
+
+- [ ] Then build the full pipeline using `retry_tar_make(num_tries = 10)`. Note the different console messages this time.
 
 When everything has run successfully, use a comment to share the images from timeseries_KY.png, timeseries_VT.png, and data_coverage.png. Include any observations you want to share about the build.
 

@@ -3,17 +3,18 @@ Your pipeline is looking great, @{{ user.username }}! It's time to put it throug
 In this issue you will:
 
 * Expand the pipeline to include all of the U.S. states and some territories
-* Learn one more **scipiper** tool, the `loop_tasks()` function
+* Learn one more method for making pipelines more robust to internet failures
 * Modify the pipeline to describe temperature sites instead of discharge sites
+* Practice the other branching method, dynamic branching 
 
-### :keyboard: Activity: Check for scipiper udpates
+### :keyboard: Activity: Check for targets udpates
 
-Before you get started, make sure you have the most up-to-date version of **scipiper**:
+Before you get started, make sure you have the most up-to-date version of **targets**:
 ```r
-packageVersion('scipiper')
-## [1] ‘0.0.20’
+packageVersion('targets')
+## [1] ‘0.4.2’
 ```
-You should have package version >= 0.0.20. If you don't, reinstall with:
+You should have package version >= 0.4.2. If you don't, reinstall with:
 ```r
 remotes::install_github('USGS-R/scipiper')
 ```

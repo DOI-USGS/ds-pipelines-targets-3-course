@@ -1,36 +1,50 @@
-### :keyboard: Activity: Use `loop_tasks`
 
-Rather than babysitting repeated `scmake()` calls until all the states build, it's time to try another option for building a task table: the `loop_tasks()` function. This **scipiper** function is designed to provide fault tolerance for tasks such as this data pull (including those where the "failures" are all real rather than being largely synthetic as in this project :wink:).
+### :keyboard: Activity: Use fault tolerant approaches to running `tar_make()`
 
-#### Expand `states`
+Rather than babysitting repeated `tar_make()` calls until all the states build, it's time to adapt our approach to running `tar_make()` when there are steps plagued by network failures. A lot of times, you just need to retry the download/upload again and it will work. This is not always the case though and sometimes, you need to address the failures. The *targets* package does not currently offer this fault tolerance in the package, so the approaches discussed here are designed by our group to provide fault tolerance for tasks such as this data pull (including those where the "failures" are all real rather than being largely synthetic as in this project :wink:). 
 
-- [ ] Within `do_state_tasks()`, insert a call to `loop_tasks` just after `# Build the tasks` and just before the calls to `scmake('obs_tallies')` and `scmake('timeseries_plots_info')`. Use the documentation at `?loop_tasks` to figure out how to pass in the task plan information (first two arguments); leave `task_steps=NULL` and `step_names=NULL`.
+#### Understand your options
 
-- [ ] Adjust the `num_tries` argument if desired to make it even more likely that you'll just need one call to `scmake()` next time. It's usually fine for `num_tries` to be higher than needed; the looping will stop once all tasks are complete.
+First, there are some considerations to make within your functions doing the data download or upload: what do you want to happen if there is a failure? There are 3 choices I see here: 
 
-- [ ] Leave `n_cores = 1` to avoid overloading NWIS Web or your local network with multiple simultaneous HTTP requests. But note that you could set this to a higher number if your task plan included local processing tasks that would go faster with local parallelization.
+1. You want the pipeline build to come to a grinding hault and not skip the erring target.
+2. You want to come back and rebuild the target that is failing but not let that stop other targets from building.
+3. If the target fails, you don't want to rebuild you just want that target to not have data. 
 
-- [ ] Replace the line
-  ```r
-  obs_tallies <- scmake('obs_tallies_promise', remake_file='123_state_tasks.yml')
-  ```
-  with this line:
-  ```r
-  obs_tallies <- remake::fetch('obs_tallies_promise', remake_file='123_state_tasks.yml')
-  ```
-  and add `remake` to the packages list in *remake.yml* because we're calling a function from that package now. This switch from `scmake` to `fetch` is possible because `loop_tasks()` will have already ensured that `obs_tallies_promise` is up to date, so we can use a simple `fetch` (which doesn't take time to check for currentness) to copy `obs_tallies` into the local environment before `return()`ing it to the main pipeline.
+If you want the first approach, congrats! That's how the pipeline behaves by default and there is not need for you to change anything. If you want the pipeline to keep going but return to build that target later, you should add `error = 'continue'` to your `tar_option_set()` call. Lastly, if you want a failure to still be considered a completed build, then consider implementing `tryCatch` in your download/upload function to gracefully handle errors and allow the code to continue.
 
-- [ ] Remove the call to `scmake('timeseries_plots.yml_promise')` because `loop_tasks()` will have already ensured that `timeseries_plots.yml_promise` is up to date. Keep the call to `yaml::yaml.load_file()`, though, because we need to create `timeseries_plot_info` so we can `return()` it to the main pipeline.
+Another approach to building fault tolerance is to limit the number of times you have to run to `tar_make()` in your console. We have our own approach and it involves a `while` loop and the `try()` function. It's a bit clever, so spend some time here digesting the function if you want. Bottom line is that it will keep running `tar_make()` until there are no errors OR until it runs out of `num_tries`.
+
+```r
+retry_tar_make <- function(tar_name_pattern = everything(), num_tries = 10) {
+  while(num_tries){
+    x <- try(tar_make(eval(tar_name_pattern)))
+    if(!is(x, 'try-error')) break
+    num_tries <- num_tries - 1
+  }
+}
+```
+
+A couple of quirks with using this function: 
+
+1. It cannot appear anywhere that is connected to your pipeline makefile because it calls `tar_make()` (you will get an error). So, my recommendation is to include this in your project `README.md` file.
+2. You _cannot_ have `error = 'continue'` set in `tar_option_set()` or `retry_tar_make()` will not recognize that your pipeline threw an error and will break out of the `while` loop.
+
+One additional fun implementation is to only retry for a subset of targets. For example, in our pipeline, we may only want the download steps to retry. If a plotting step throws an error, it is likely something we need to go debug and not due to internet failures. So, if we were to retry only the download steps, we could run something like this:
+
+```r
+retry_tar_make(starts_with("nwis_data"))
+```
+
+Once your flaky downloads were complete, then you could carry on with `tar_make()` as usual.
 
 #### Test
 
-_Note: When you next run `scmake()`, you might or might not hit an issue that I was sometimes seeing when developing this course: the build might do just fine right up until the first combiner, at which point you may see see_
-```r
-Error: hash 'b18f3d9c360f89665bf89fdeb945cb16' not found
-```
-_(where the exact hash value will differ for you). I think the issue might have to do with interrupting a build partway through (I may have been impatient with an `scmake()` call or two), but I can't fully pin it down yet, and we don't always see the error. If you do see this error, I'm afraid the only solution I've found is to delete the *.remake* folder and run `scmake()` again from scratch. On the bright side, that will give you time to check your email, say something nice to a coworker, etc._
+- [ ] Add the `retry_tar_make()` code to your README.md file with a comment about when/why you would use it.
 
-- [ ] Run `scmake()`. Note the different console messages this time. Grab a tea or coffee if you like - it's a long run (~7-minutes), but at least there's no babysitting needed!
+- [ ] Run the code for `retry_tar_make()` so that the function is available in your local environment.
+
+- [ ] Run `retry_tar_make()`. Grab a tea or coffee if you like - it's a long run (~7-minutes), but at least there's no babysitting needed!
 
 #### Commit
 
