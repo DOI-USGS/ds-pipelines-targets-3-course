@@ -317,7 +317,7 @@ steps:
         data:
           branch: combiners
   - title: Combiners
-    description: Learn when and how to combine results from task-steps
+    description: Learn when and how to combine results from static branching
     link: '{{ store.url_50 }}'
     event: issue_comment.created
     actions:
@@ -331,11 +331,11 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 52-as_promises.md
+        with: 52-combiner-progress-check.md
         store:
           url_52: '{{ result.data.html_url }}'
-  - title: Discover as_promises
-    description: Learn nuances and solutions for combiner target names
+  - title: Check your progress after adding combiner
+    description: Verify that your combiner did what you expected
     link: '{{ store.url_52 }}'
     event: issue_comment.created
     actions:

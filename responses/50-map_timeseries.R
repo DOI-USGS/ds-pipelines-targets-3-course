@@ -35,4 +35,5 @@ map_timeseries <- function(site_info, plot_info, out_file) {
   htmlwidgets::saveWidget(m, file=basename(out_file))
   file.copy(basename(out_file), out_file, overwrite=TRUE)
   file.remove(basename(out_file))
+  return(out_file)
 }
