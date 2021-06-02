@@ -16,7 +16,7 @@
 
 #### Prepare the makefile to use `combine_obs_tallies()`
 
-- [ ] Break up the single list of targets into 3 separate objects: one for `oldest_active_sites`, one for the whole static branching `tar_map()` call, and one for `site_map_png`. 
+- [ ] Break up the single list of targets into 3 separate objects: one for `oldest_active_sites`, one for the whole static branching `tar_map()` called `state_branches`, and one for `site_map_png`. 
 
 - [ ] Add a call to `list()` at the bottom of the makefile to combine these new individual target objects into one list of targets.
 

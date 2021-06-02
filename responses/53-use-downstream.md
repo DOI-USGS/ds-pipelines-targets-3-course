@@ -2,7 +2,7 @@
 
 It's time to reap the rewards from your first combiner.
 
-- [ ] Create a new target in *_targets.R* that takes advantage of your new combined tallies. Use the `plot_data_coverage()` function already defined for you (find it by searching or browing the repository - remember `Ctrl-.`), and pass in `obs_tallies` as the `oldest_site_tallies` argument. Set up your target to create a file named `"3_visualize/out/data_coverage.png"`. Remember to add a `source()` call to load the file near the top of *_targets.R*, and add this new target to your `list()` at the bottom of `_targets.R` so that it is connected to the main pipeline.
+- [ ] Create a new target in *_targets.R* that takes advantage of your new combined tallies. Use the `plot_data_coverage()` function already defined for you (find it by searching or browing the repository - remember `Ctrl-.`), and pass in `obs_tallies` as the `oldest_site_tallies` argument. Set up your target to create a file named `"3_visualize/out/data_coverage.png"` and name the target appropriately. Remember to add a `source()` call to load the file near the top of *_targets.R*, and add this new target to your `list()` at the bottom of `_targets.R` so that it is connected to the main pipeline.
 
 - [ ] Test your new target by running `tar_make()`, then checking out *3_visualize/out/data_coverage.png*.
 
