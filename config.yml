@@ -353,28 +353,19 @@ steps:
         store:
           url_54: '{{ result.data.html_url }}'
   - title: Add a summary combiner
-    description: Summarize the state plots in one YAML file
+    description: Summarize the state plots in one CSV file
     link: '{{ store.url_54 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 55-summary-target.md
-        store:
-          url_55: '{{ result.data.html_url }}'
-  - title: Connect both combiners to the pipeline
-    description: Solve a one-function, two-target problem
-    link: '{{ store.url_55 }}'
-    event: issue_comment.created
-    actions:
-      - type: respond
-        with: 56-html-target.md
+        with: 55-html-target.md
         data:
           branch: combiners
         store:
-          url_56: '{{ result.data.html_url }}'
+          url_55: '{{ result.data.html_url }}'
   - title: Use the summary combiner downstream
     description: Make a leaflet map of sites and timeseries data
-    link: '{{ store.url_56 }}'
+    link: '{{ store.url_55 }}'
     event: pull_request.opened
     actions:
       - type: respond
@@ -382,10 +373,10 @@ steps:
         data:
           issue: '{{ store.issue_num_50 }}'
         store:
-          pr_56: '{{ payload.pull_request.number }}'
+          pr_55: '{{ payload.pull_request.number }}'
   - title: Merge your combiners PR
     description: Respond to comments and then merge your PR
-    link: '{{ store.pr_56 }}'
+    link: '{{ store.pr_55 }}'
     event: pull_request.closed
     actions:
       - type: gate
