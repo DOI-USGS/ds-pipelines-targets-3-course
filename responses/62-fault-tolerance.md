@@ -5,46 +5,31 @@ Rather than babysitting repeated `tar_make()` calls until all the states build, 
 
 #### Understand your options
 
-First, there are some considerations to make within your functions doing the data download or upload: what do you want to happen if there is a failure? There are 3 choices I see here: 
+There are a few choices to consider when thinking about fault tolerance in pipelines and they can be separated into two categories - how you want the full pipeline to behave vs. how you want to handle individual targets.  
 
-1. You want the pipeline build to come to a grinding hault and not skip the erring target.
+Choices for handling errors in the full pipeline:
+
+1. You want the pipeline build to come to a grinding hault if any of the targets throw an error.
 2. You want to come back and rebuild the target that is failing but not let that stop other targets from building.
-3. If the target fails, you don't want to rebuild you just want that target to not have data. 
 
-If you want the first approach, congrats! That's how the pipeline behaves by default and there is not need for you to change anything. If you want the pipeline to keep going but return to build that target later, you should add `error = 'continue'` to your `tar_option_set()` call. Lastly, if you want a failure to still be considered a completed build, then consider implementing `tryCatch` in your download/upload function to gracefully handle errors and allow the code to continue.
+If you want the first approach, congrats! That's how the pipeline behaves by default and there is no need for you to change anything. If you want the pipeline to keep going but return to build that target later, you should add `error = 'continue'` to your `tar_option_set()` call. 
 
-Another approach to building fault tolerance is to limit the number of times you have to run to `tar_make()` in your console. We have our own approach and it involves a `while` loop and the `try()` function. It's a bit clever, so spend some time here digesting the function if you want. Bottom line is that it will keep running `tar_make()` until there are no errors OR until it runs out of `num_tries`.
+Now let's talk about handling errors for individual targets. There are also a few ideas to consider here.
 
-```r
-retry_tar_make <- function(tar_name_pattern = everything(), num_tries = 10) {
-  while(num_tries){
-    x <- try(tar_make(eval(tar_name_pattern)))
-    if(!is(x, 'try-error')) break
-    num_tries <- num_tries - 1
-  }
-}
-```
+1. If the target fails, you want that target to return no data and keep going. 
+2. If the target fails, you want to retry building that target `n` times (in case of internet flakyness) before ultimately considering it a failed target. 
 
-A couple of quirks with using this function: 
+If you want a failure to still be considered a completed build, then consider implementing `tryCatch` in your download/upload function to gracefully handle errors, return something (e.g. `data.frame()`) from the function, and allow the code to continue. If you want to retry a target before moving on in the pipeline, then we can use the function `retry::retry()`. This is a function from the *retry* package, which you may or may not have installed. Go ahead and check that you have this package before continuing. 
 
-1. It cannot appear anywhere that is connected to your pipeline makefile because it calls `tar_make()` (you will get an error). So, my recommendation is to include this in your project `README.md` file.
-2. You _cannot_ have `error = 'continue'` set in `tar_option_set()` or `retry_tar_make()` will not recognize that your pipeline threw an error and will break out of the `while` loop.
-
-One additional fun implementation is to only retry for a subset of targets. For example, in our pipeline, we may only want the download steps to retry. If a plotting step throws an error, it is likely something we need to go debug and not due to internet failures. So, if we were to retry only the download steps, we could run something like this:
-
-```r
-retry_tar_make(starts_with("nwis_data"))
-```
-
-Once your flaky downloads were complete, then you could carry on with `tar_make()` as usual.
+Wrapping a target `command` with `retry()` will keep building that target until there are no errors OR until it runs out of `max_tries`. You can also set the `when` argument of `retry()` to declare what error message should initiate a rebuild (the input to `when` can be a [regular expression](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions)).
 
 #### Test
 
-- [ ] Add the `retry_tar_make()` code to your README.md file with a comment about when/why you would use it.
+- [ ] Add code to load the package *retry* at the top of your *_targets.R* file.
 
-- [ ] Run the code for `retry_tar_make()` so that the function is available in your local environment.
+- [ ] Wrap the `get_site_data()` function in your static branching code with `retry()`. The `retry()` function should look for the error message matching `"Ugh, the internet data transfer failed!"` and should rerun `get_site_data()` a maximum of 10 times. 
 
-- [ ] Run `retry_tar_make()`. Grab a tea or coffee if you like - it's a long run (~7-minutes), but at least there's no babysitting needed!
+- [ ] Now run `tar_make()`. Since we have not built the pipeline since adding all of the states, it will take awhile (~ 7 min). Grab a tea or coffee while you wait - at least there's no babysitting needed!
 
 #### Commit
 
