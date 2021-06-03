@@ -28,9 +28,9 @@ The above notes are really just intended to raise your awareness about complicat
 
 - [ ] Run `library(targets)` (because you're in a new R session).
 
-- [ ] Load the `retry_tar_make()` function into your local environment by copying the code from the *README.md* file and running in your console. 
+- [ ] You copied the whole pipeline directory, and with it, the previous pipeline's `_targets/` directory and build status info. Let's wipe that out before we build this new pipeline with temperature data. Double check that you are in your `ds-pipelines-targets-3-temperature` RStudio project and then run `tar_destroy()`. USE THIS VERY CAUTIOUSLY AS IT WILL CAUSE YOU TO HAVE TO REBUILD EVERYTHING.  
 
-- [ ] Then build the full pipeline using `retry_tar_make(num_tries = 10)`. Note the different console messages this time.
+- [ ] Build the full pipeline using `tar_make()`. Note the different console messages this time.
 
 When everything has run successfully, use a comment to share the images from timeseries_KY.png, timeseries_VT.png, and data_coverage.png. Include any observations you want to share about the build.
 
