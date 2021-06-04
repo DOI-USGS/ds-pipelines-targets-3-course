@@ -1,8 +1,8 @@
-title: Many-task pipelines
-description: Split-apply-combine paradigm and our USGS Data Science Branch implementations
+title: Many-task pipelines using targets
+description: Split-apply-combine paradigm and our USGS Data Science Branch implementations using targets
 template:
-  repo: ds-pipelines-3-template
-  name: ds-pipelines-3
+  repo: ds-pipelines-targets-3-template
+  name: ds-pipelines-targets-3
 before:
   - type: createIssue
     title: Recognize the unique demands of data-rich pipelines
@@ -64,7 +64,7 @@ steps:
         store:
           url_13: '{{ result.data.html_url }}'
   - title: Add data targets for each state
-    description: Create a many-task remakefile the hard way
+    description: Create a many-task makefile the hard way
     link: '{{ store.url_13 }}'
     event: pull_request.opened
     actions:
@@ -88,71 +88,62 @@ steps:
         with: zz-next-issue.md
       - type: closeIssue
         issue: '{{ store.issue_num_10 }}'
-      - type: createFile
-        filename: 21-123_state_tasks.R
-        new_name: 123_state_tasks.R
-        branch: master
       - type: createIssue
-        title: Task tables
-        body: 20-task-table.md
+        title: Branching
+        body: 20-branching.md
         comments:
           - zz-start-branch.md
         store:
           url_20: '{{ result.data.html_url }}'
           issue_num_20: '{{ result.data.number }}'
-          branch_20: 'task-table'
+          branch_20: 'static-branching'
         data:
-          branch: task-table
-  - title: Task tables
-    description: "Learn about scipiper's task table concept and implementation"
+          branch: static-branching
+  - title: Branching
+    description: "Learn about scaling a pipeline to handle many tasks"
     link: '{{ store.url_20 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 21-rows-columns.md
+        with: 21-dynamic-static-branching.md
         data:
           branch: '{{ store.branch_20 }}'
         store:
           url_21: '{{ result.data.html_url }}'
-  - title: Plan rows and columns
-    description: Define the rows and columns of your task table
+  - title: Plan your branching approach
+    description: Learn about dynamic vs static branching
     link: '{{ store.url_21 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 22-task-plan.md
+        with: 22-implement-branching.md
+        data:
+          branch: '{{ store.branch_20 }}'
         store:
           url_22: '{{ result.data.html_url }}'
-  - title: Make the task plan
-    description: Create an R list object describing your plan
+  - title: Implement static branching
+    description: Create an R tibble object to define configs per task
     link: '{{ store.url_22 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 23-task-remakefile.md
+        with: 23-build-pipeline.md
         store:
           url_23: '{{ result.data.html_url }}'
-  - title: Make the task remakefile
-    description: Write a YAML file describing your plan
+  - title: Test your pipeline
+    description: Practice running your pipeline with static branching enabled
     link: '{{ store.url_23 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 24-parent-target.md
+        with: 24-problems-remain.md
+        data:
+          branch: '{{ store.branch_20 }}'
         store:
           url_24: '{{ result.data.html_url }}'
-  - title: Connect to the main pipeline
-    description: Connect the task remakefile to remake.yml
-    link: '{{ store.url_24 }}'
-    event: issue_comment.created
-    actions:
-      - type: respond
-        with: 25-problems-remain.md
-        store:
-          url_25: '{{ result.data.html_url }}'
   - title: Strive for perfection
-    description: Note two more problems; fix one
-    link: '{{ store.url_25 }}'
+    description: Note one more problem
+    link: '{{ store.url_24 }}'
     event: pull_request.opened
     actions:
       - type: respond
@@ -160,10 +151,10 @@ steps:
         data:
           issue: '{{ store.issue_num_20 }}'
         store:
-          pr_25: '{{ payload.pull_request.number }}'
-  - title: Merge your task remakefile PR
+          pr_24: '{{ payload.pull_request.number }}'
+  - title: Merge your static branching PR
     description: Respond to comments and then merge your PR
-    link: '{{ store.pr_25 }}'
+    link: '{{ store.pr_24 }}'
     event: pull_request.closed
     actions:
       - type: gate
@@ -231,11 +222,11 @@ steps:
       - type: createFile
         filename: 40-tally_site_obs.R
         new_name: 2_process/src/tally_site_obs.R
-        branch: master
+        branch: main
       - type: createFile
         filename: 40-plot_site_data.R
         new_name: 3_visualize/src/plot_site_data.R
-        branch: master
+        branch: main
       - type: createIssue
         title: Appliers
         body: 40-more-appliers.md
@@ -256,7 +247,7 @@ steps:
         store:
           url_41: '{{ result.data.html_url }}'
   - title: Add plots and tallies
-    description: Expand the task table to include three steps
+    description: Expand the state branching to include three steps
     link: '{{ store.url_41 }}'
     event: issue_comment.created
     actions:
@@ -270,7 +261,7 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 43-force-TRUE.md
+        with: 43-revise-rebuild.md
         store:
           url_43: '{{ result.data.html_url }}'
   - title: Revise and rebuild
@@ -279,11 +270,11 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 44-less-force.md
+        with: 44-skipping-power.md
         store:
           url_44: '{{ result.data.html_url }}'
-  - title: Use less force
-    description: When is it appropriate to use force=TRUE?
+  - title: Pipeline strategy in action
+    description: See your hard work in action as the pipeline skips rebuilding everything but the plots
     link: '{{ store.url_44 }}'
     event: pull_request.opened
     actions:
@@ -310,11 +301,11 @@ steps:
       - type: createFile
         filename: 50-plot_data_coverage.R
         new_name: 3_visualize/src/plot_data_coverage.R
-        branch: master
+        branch: main
       - type: createFile
         filename: 50-map_timeseries.R
         new_name: 3_visualize/src/map_timeseries.R
-        branch: master
+        branch: main
       - type: createIssue
         title: Combiners
         body: 50-combiners.md
@@ -326,7 +317,7 @@ steps:
         data:
           branch: combiners
   - title: Combiners
-    description: Learn when and how to combine results from task-steps
+    description: Learn when and how to combine results from static branching
     link: '{{ store.url_50 }}'
     event: issue_comment.created
     actions:
@@ -340,11 +331,11 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 52-as_promises.md
+        with: 52-combiner-progress-check.md
         store:
           url_52: '{{ result.data.html_url }}'
-  - title: Discover as_promises
-    description: Learn nuances and solutions for combiner target names
+  - title: Check your progress after adding combiner
+    description: Verify that your combiner did what you expected
     link: '{{ store.url_52 }}'
     event: issue_comment.created
     actions:
@@ -362,28 +353,19 @@ steps:
         store:
           url_54: '{{ result.data.html_url }}'
   - title: Add a summary combiner
-    description: Summarize the state plots in one YAML file
+    description: Summarize the state plots in one CSV file
     link: '{{ store.url_54 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 55-summary-target.md
-        store:
-          url_55: '{{ result.data.html_url }}'
-  - title: Connect both combiners to the pipline
-    description: Solve a one-function, two-target problem
-    link: '{{ store.url_55 }}'
-    event: issue_comment.created
-    actions:
-      - type: respond
-        with: 56-html-target.md
+        with: 55-html-target.md
         data:
           branch: combiners
         store:
-          url_56: '{{ result.data.html_url }}'
+          url_55: '{{ result.data.html_url }}'
   - title: Use the summary combiner downstream
     description: Make a leaflet map of sites and timeseries data
-    link: '{{ store.url_56 }}'
+    link: '{{ store.url_55 }}'
     event: pull_request.opened
     actions:
       - type: respond
@@ -391,10 +373,10 @@ steps:
         data:
           issue: '{{ store.issue_num_50 }}'
         store:
-          pr_56: '{{ payload.pull_request.number }}'
+          pr_55: '{{ payload.pull_request.number }}'
   - title: Merge your combiners PR
     description: Respond to comments and then merge your PR
-    link: '{{ store.pr_56 }}'
+    link: '{{ store.pr_55 }}'
     event: pull_request.closed
     actions:
       - type: gate
@@ -431,11 +413,11 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 62-loop_tasks.md
+        with: 62-fault-tolerance.md
         store:
           url_62: '{{ result.data.html_url }}'
-  - title: Discover loop_tasks()
-    description: 'Try out `loop_tasks()` for building tasks tables'
+  - title: No more babysitting the pipeline build
+    description: 'Discover approaches for building fault tolerant pipelines'
     link: '{{ store.url_62 }}'
     event: issue_comment.created
     actions:

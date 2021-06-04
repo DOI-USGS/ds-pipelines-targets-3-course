@@ -1,10 +1,10 @@
-map_timeseries <- function(site_info, plot_info, out_file) {
+map_timeseries <- function(site_info, plot_info_csv, out_file) {
   # libraries: leaflet, leafpop, htmlwidgets
 
   # prepare data
-  map_data <- plot_info %>%
-    extract(col='filename', into='state_cd', regex='3_visualize/out/timeseries_([[:alpha:]]{2})\\.png', remove=FALSE) %>%
-    select(state_cd, filename) %>%
+  map_data <- readr::read_csv(plot_info_csv) %>%
+    extract(col='filepath', into='state_cd', regex='3_visualize/out/timeseries_([[:alpha:]]{2})\\.png', remove=FALSE) %>%
+    select(state_cd, filepath) %>%
     left_join(select(site_info, state_cd, site_no, station_nm, dec_lat_va, dec_long_va, count_nu), by='state_cd')
 
   # prepare map aesthetics
@@ -35,4 +35,5 @@ map_timeseries <- function(site_info, plot_info, out_file) {
   htmlwidgets::saveWidget(m, file=basename(out_file))
   file.copy(basename(out_file), out_file, overwrite=TRUE)
   file.remove(basename(out_file))
+  return(out_file)
 }

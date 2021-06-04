@@ -17,7 +17,7 @@ How did you do?
 
 - [ ] Add Indiana (`IN`) and Iowa (`IA`) to the vector of `states` in *remake.yml*. Rebuild. Did you see the rebuilds and non-rebuilds that you expected?
 
-(If you're not sure what you should have expected, check with Alison, Jordan, or another teammate.)
+(If you're not sure what you should have expected, check with your course contact, or another teammate.)
 
 #### Commit and PR
 

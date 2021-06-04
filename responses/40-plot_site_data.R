@@ -9,4 +9,5 @@ plot_site_data <- function(out_file, site_data, parameter) {
     ylab(dataRetrieval::parameterCdFile %>% filter(parameter_cd == parameter) %>% pull(parameter_nm)) +
     ggtitle(site_data$Site[1])
   ggsave(out_file, plot=p, width=6, height=3)
+  return(out_file)
 }

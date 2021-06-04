@@ -12,8 +12,8 @@ cd {{ repo }}
 
 You may need to install some of the packages for this course if you don't have them already. These are:
 
-* **scipiper**
-* **remake**
+* **targets**
+* **tarchetypes**
 * **tidyverse**
 * **dataRetrieval**
 * **urbnmapr**
@@ -23,15 +23,13 @@ You may need to install some of the packages for this course if you don't have t
 * **leafpop**
 * **htmlwidgets**
 
-If you don't already have **remake** and **scipiper** installed, refer to the documentation [here](https://github.com/USGS-R/scipiper/blob/master/README.md#installation) to install those packages.
-
 Install **urbnmapr** with `remotes::install_github('UrbanInstitute/urbnmapr')`.
 
 All the rest should be installable with `install.packages()`.
 
 ### :keyboard: Activity: Invite some collaborators
 
-Alison (**aappling-usgs**) and/or Jordan (**jread-usgs**) will be providing code reviews during your course. To make it possible for you to request reviews from them, go to the *Settings* tab, *Manage access* subtab, and then click the green button to *Invite a collaborator* to add each of their usernames to your repo.
+One of the course coordinators was named as your contact for this course. They will provide code reviews during your course. To make it possible for you to request reviews from them, go to the *Settings* tab, *Manage access* subtab, and then click the green button to *Invite a collaborator* to add each of their usernames to your repo.
 
 ![How to invite reviewers](https://user-images.githubusercontent.com/12039957/83422503-9fb65e00-a3f7-11ea-8e06-ad87c813247e.png)
 

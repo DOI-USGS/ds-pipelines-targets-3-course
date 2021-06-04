@@ -8,4 +8,5 @@ plot_data_coverage <- function(oldest_site_tallies, out_file, parameter) {
     ggtitle(sprintf('Observation counts for champion %s sites', parameter_name)) +
     scale_fill_brewer('Obs per Year') + theme_bw() -> p
   ggsave(out_file, plot=p, width=8, height=10)
+  return(out_file)
 }
