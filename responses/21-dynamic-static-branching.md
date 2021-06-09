@@ -2,7 +2,7 @@ Before we get to editing, let's briefly discuss the differences between static a
 
 ### Dynamic branching
 
-In dynamic branching, your **tasks** are defined by another target in your pipeline. They are *dynamic* because the tasks can change when the pipeline is built. This is particular useful when the tasks depend on some number of files that may change through time as you run your pipeline. Read more about the key parts of dynamic branching below.
+In dynamic branching, your **tasks** are defined by another target in your pipeline. They are *dynamic* because the task targets can change while the pipeline is being built. This is particular useful when the tasks depend on some number of files that may change through time as you run your pipeline. Read more about the key parts of dynamic branching below.
 
 1. **Set up**: Dynamic branching is set up by using `tar_target()` as you usually would (where the `command` you pass in represents one **step**) but adding the argument `pattern` to define how to split a previous target into tasks. Typically, you will see `map()` used to define the `pattern` for splitting up a target into tasks, but you can find details about other options available [here in the `targets` documentation](https://books.ropensci.org/targets/dynamic.html#pattern-construction). 
 2. **Define multiple steps**: To apply multiple steps to a set of tasks, you will need to write addition calls to `tar_target()` calls with `pattern` specified.
@@ -68,3 +68,4 @@ When your tasks could change based on previous parts of your pipeline, you shoul
 
 With that intro out of the way, let's get going on *implementing* code for branching already!
 
+<hr><h3 align="center">Add a comment to this issue to proceed.</h3>
