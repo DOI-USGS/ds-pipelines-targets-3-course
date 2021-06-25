@@ -191,7 +191,7 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 32-connect-splitter.md
+        with: 32-test-splitter.md
         store:
           url_32: '{{ result.data.html_url }}'
   - title: Add the splitter to the main pipeline
