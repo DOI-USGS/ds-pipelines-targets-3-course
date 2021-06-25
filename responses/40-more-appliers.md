@@ -23,7 +23,8 @@ As you already know, static branching is set up using the `tar_map()` function, 
 ```r
 tar_map(
   values = tibble(state_abb = states),
-  tar_target(nwis_data, get_site_data(oldest_active_sites, state_abb, parameter))
+  tar_target(nwis_inventory, filter(oldest_active_sites, state_cd == state_abb)),
+  tar_target(nwis_data, get_site_data(nwis_inventory, state_abb, parameter))
   # Insert step for tallying data here
   # Insert step for plotting data here
 )
