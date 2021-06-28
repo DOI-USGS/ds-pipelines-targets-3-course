@@ -422,27 +422,36 @@ steps:
     event: issue_comment.created
     actions:
       - type: respond
-        with: 63-repurpose-pipeline.md
-        data:
-          current-branch: scale-up
-          new-branch: temperature
+        with: 63-dynamic-branching.md
         store:
           url_63: '{{ result.data.html_url }}'
-  - title: Reuse your pipeline
-    description: Repurpose your pipeline for temperature data
+  - title: Implement dynamic branching
+    description: Learn how to setup dynamic branching
     link: '{{ store.url_63 }}'
     event: issue_comment.created
     actions:
       - type: respond
-        with: 64-loop-tricks.md
+        with: 64-repurpose-pipeline.md
+        data:
+          current-branch: scale-up
+          new-branch: temperature
+        store:
+          url_64: '{{ result.data.html_url }}'
+  - title: Reuse your pipeline
+    description: Repurpose your pipeline for temperature data
+    link: '{{ store.url_64 }}'
+    event: issue_comment.created
+    actions:
+      - type: respond
+        with: 65-final-tricks.md
         data:
           first-branch: scale-up
           second-branch: temperature
         store:
-          url_64: '{{ result.data.html_url }}'
+          url_65: '{{ result.data.html_url }}'
   - title: Wrap up
     description: Retrospect and get feedback on your two repo branches
-    link: '{{ store.url_64 }}'
+    link: '{{ store.url_65 }}'
     event: pull_request.opened
     actions:
       - type: respond
@@ -450,7 +459,7 @@ steps:
         data:
           issue: '{{ store.issue_num_60 }}'
         store:
-          pr_64: '{{ payload.pull_request.number }}'
+          pr_65: '{{ payload.pull_request.number }}'
   - title: Merge your capstone PR
     description: Respond to comments and then merge your PR
     link: '{{ store.pr_64 }}'

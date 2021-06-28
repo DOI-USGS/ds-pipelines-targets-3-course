@@ -4,8 +4,8 @@ In this issue you will:
 
 * Expand the pipeline to include all of the U.S. states and some territories
 * Learn one more method for making pipelines more robust to internet failures
-* Modify the pipeline to describe temperature sites instead of discharge sites
 * Practice the other branching method, dynamic branching 
+* Modify the pipeline to describe temperature sites instead of discharge sites
 
 ### :keyboard: Activity: Check for targets udpates
 
