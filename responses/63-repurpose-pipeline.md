@@ -12,7 +12,7 @@ The above notes are really just intended to raise your awareness about complicat
 
 ### :keyboard: Activity: Repurpose the pipeline
 
-- [ ] Make a copy of your whole local repo folder. You can just use standard file copying methods (File Explorer, `cp`, whatever you want). Name this new top-level folder "ds-pipelines-targets-3-temperature". Open a new RStudio session with "ds-pipelines-targets-3-temperature" as the project.
+- [ ] Make a copy of your whole local repo folder. You can just use standard file copying methods (File Explorer, `cp`, whatever you want). Name this new top-level folder "ds-pipelines-targets-3-temperature". Create a new RStudio project from an existing directory, using "ds-pipelines-targets-3-temperature" as that directory, and open in a new RStudio session. 
 
 - [ ] Create a second local branch, this time called "{{ new-branch }}", and push this new branch up to the remote location "origin". Check to make sure you're already on the "{{ current-branch }}" branch (e.g., with `git status` or by looking at the Git tab in RStudio), and then:
   ```
@@ -30,7 +30,7 @@ The above notes are really just intended to raise your awareness about complicat
 
 - [ ] You copied the whole pipeline directory, and with it, the previous pipeline's `_targets/` directory and build status info. Let's wipe that out before we build this new pipeline with temperature data. Double check that you are in your `ds-pipelines-targets-3-temperature` RStudio project and then run `tar_destroy()`. USE THIS VERY CAUTIOUSLY AS IT WILL CAUSE YOU TO HAVE TO REBUILD EVERYTHING.  
 
-- [ ] Build the full pipeline using `tar_make()`. Note the different console messages this time.
+- [ ] Build the full pipeline using `tar_make()`. Note the different console messages this time. There may be a few states that hit our `max_tries` cap of 10 and fail. This can create weird errors later in the pipeline. So, if you see some weird errors on some of the visualization steps, try running `tar_outdated()` to see if there are incomplete state data targets. If there are, no worries just run `tar_make()` again and it should complete.
 
 When everything has run successfully, use a comment to share the images from timeseries_KY.png, timeseries_VT.png, and data_coverage.png. Include any observations you want to share about the build.
 
