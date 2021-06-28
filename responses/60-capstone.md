@@ -12,9 +12,9 @@ In this issue you will:
 Before you get started, make sure you have the most up-to-date version of **targets**:
 ```r
 packageVersion('targets')
-## [1] ‘0.4.2’
+## [1] ‘0.5.0.9002’
 ```
-You should have package version >= 0.4.2. If you don't, reinstall with:
+You should have package version >= 0.5.0.9002. If you don't, reinstall with:
 ```r
-remotes::install_github('USGS-R/scipiper')
+remotes::install_github('ropensci/targets')
 ```
