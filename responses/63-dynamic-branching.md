@@ -53,7 +53,7 @@ states <- c('AL','AZ','AR','CA','CO','CT','DE','DC','FL','GA','ID','IL','IN','IA
 
 - [ ] Run `tar_visnetwork()`. Is it the same or different since updating the states?
 
-- [ ] Time to test the full thing! Run `tar_make()`. Since we used `tar_destroy()` between the last full state build and now, it will take awhile (~ 5 min).
+- [ ] Time to test the full thing! Run `tar_make()`. Since we used `tar_destroy()` between the last full state build and now, it will take awhile (~ 10 min).
 
 #### Commit
 

@@ -29,7 +29,7 @@ Wrapping a target `command` with `retry()` will keep building that target until 
 
 - [ ] Wrap the `get_site_data()` function in your static branching code with `retry()`. The `retry()` function should look for the error message matching `"Ugh, the internet data transfer failed!"` and should rerun `get_site_data()` a maximum of 10 times. 
 
-- [ ] Now run `tar_make()`. Since we have not built the pipeline since adding all of the states, it will take awhile (~ 7 min). Grab a tea or coffee while you wait - at least there's no babysitting needed!
+- [ ] Now run `tar_make()`. Since we have not built the pipeline since adding all of the states, it will take awhile (~ 10 min). Grab a tea or coffee while you wait - at least there's no babysitting needed!
 
 #### Commit
 
