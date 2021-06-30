@@ -18,7 +18,7 @@ Remember that both dynamic and static branching can have multiple steps or **app
 
 #### Adding another step in static branching
 
-As you already know, static branching is set up using the `tar_map()` function, where tasks are defined by the argument `values` as either a list or data.frame and steps are defined by a call to `tar_target()` as an additional argument. Up until now, your static branching code in `_targets.R`, looks something like 
+As you already know, static branching is set up using the `tar_map()` function, where task targets are defined by the argument `values` as either a list or data.frame and steps are defined by a call to `tar_target()` as an additional argument. Up until now, your static branching code in `_targets.R`, looks something like 
 
 ```r
 tar_map(
@@ -30,7 +30,7 @@ tar_map(
 )
 ```
 
-There is already a hint at what we do to add an addition step ... *ahem* `#Insert step for tallying data here` and `#Insert step for plotting data here` *ahem*. So, you can include additional calls to `tar_target()` to add more appliers for your tasks. If you want to use a previous step's output, just use the target name from that step and **targets** will appropriately pass only the output relevant to each task between the steps within `tar_map()`. 
+There is already a hint at what we do to add an addition step ... *ahem* `#Insert step for tallying data here` and `#Insert step for plotting data here` *ahem*. So, you can include additional calls to `tar_target()` to add more appliers to your branches. If you want to use a previous step's output, just use the target name from that step and **targets** will appropriately pass only the output relevant to each task target between the steps within `tar_map()`. 
 
 #### Steps that require additional info per task
 

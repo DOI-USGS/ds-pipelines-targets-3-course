@@ -20,7 +20,7 @@ tar_map(
   tar_target(nwis_data, get_site_data(nwis_inventory, state_abb, parameter))
 )
 ```
-...this works but means that `get_state_inventory()` is called for each of our tasks. Suppose that `sites_info` was a file that took a long time to read in - we've encountered cases like this for large spatial data files, for example - you'd have to re-open the file for each and every call to `get_state_inventory()`, which would be excruciatingly slow for a many-state pipeline.
+...this works but means that `get_state_inventory()` is called for each of our task targets. Suppose that `sites_info` was a file that took a long time to read in - we've encountered cases like this for large spatial data files, for example - you'd have to re-open the file for each and every call to `get_state_inventory()`, which would be excruciatingly slow for a many-state pipeline.
 
 Fortunately, there's another way.
 
