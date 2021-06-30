@@ -13,7 +13,7 @@ We are going to convert the code for those targets into static branching. We are
 
 #### Include appropriate packages
 
-Now that we are using branching, our main pipeline makefile will need the `tarchetypes` package. In addition, we will use `tibble::tibble()` to define our task data.frame. Make these two packages available to the pipeline makefile by adding the following to the other library calls in `_targets.R`:
+Now that we are using branching, our main pipeline makefile will need the `tarchetypes` package. In addition, we will use `tibble::tibble()` to define our task data.frame. Make these two packages available to the targets pipeline by adding the following to the other library calls in `_targets.R`:
 
 ```r
 library(tarchetypes)

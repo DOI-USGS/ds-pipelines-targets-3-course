@@ -1,5 +1,5 @@
 In the last issue you noted some inefficiencies with writing out many nearly-identical targets within a remake.yml:
-1. It's a pain (more typing and potentially a very long *remake.yml* file) to add new sites.
+1. It's a pain (more typing and potentially a very long *_targets.R* file) to add new sites.
 2. Potential for errors (more typing, more copy/paste = more room for making mistakes).
 
 In this issue we'll fix those inefficiencies by adopting the *branching* approach supported by **targets** and the support package **tarchetypes**.
@@ -12,6 +12,6 @@ In the example analysis for this course, each task is a state and the first step
 
 ![Branches](https://user-images.githubusercontent.com/13220910/119408393-3c2ddc00-bcab-11eb-812a-598d7ba07d00.jpg)
 
-We implement branching in two ways: as **static branching**, where the tasks are predefined before the pipeline runs, and **dynamic branching**, where tasks are defined within the pipeline targets.
+We implement branching in two ways: as **static branching**, where the task targets are predefined before the pipeline runs, and **dynamic branching**, where task targets are defined while the pipeline runs.
 
 In this issue you'll adjust the existing pipelining to use branching for this analysis of USGS's oldest gages.
