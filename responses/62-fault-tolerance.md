@@ -1,7 +1,7 @@
 
 ### :keyboard: Activity: Use fault tolerant approaches to running `tar_make()`
 
-Rather than babysitting repeated `tar_make()` calls until all the states build, it's time to adapt our approach to running `tar_make()` when there are steps plagued by network failures. A lot of times, you just need to retry the download/upload again and it will work. This is not always the case though and sometimes, you need to address the failures. The *targets* package does not currently offer this fault tolerance in the package, so the approaches discussed here are designed by our group to provide fault tolerance for tasks such as this data pull (including those where the "failures" are all real rather than being largely synthetic as in this project :wink:). 
+Rather than babysitting repeated `tar_make()` calls until all the states build, it's time to adapt our approach to running `tar_make()` when there are steps plagued by network failures. A lot of times, you just need to retry the download/upload again and it will work. This is not always the case though and sometimes, you need to address the failures. The *targets* package does not currently offer this fault tolerance, so the approaches discussed here are designed by our group to provide fault tolerance for tasks such as this data pull (including those where the "failures" are all real rather than being largely synthetic as in this project :wink:). 
 
 #### Understand your options
 
@@ -29,7 +29,7 @@ Wrapping a target `command` with `retry()` will keep building that target until 
 
 - [ ] Wrap the `get_site_data()` function in your static branching code with `retry()`. The `retry()` function should look for the error message matching `"Ugh, the internet data transfer failed!"` and should rerun `get_site_data()` a maximum of 10 times. 
 
-- [ ] Now run `tar_make()`. Since we have not built the pipeline since adding all of the states, it will take awhile (~ 7 min). Grab a tea or coffee while you wait - at least there's no babysitting needed!
+- [ ] Now run `tar_make()`. Since we have not built the pipeline since adding all of the states, it will take awhile (~ 10 min). Grab a tea or coffee while you wait - at least there's no babysitting needed!
 
 #### Commit
 

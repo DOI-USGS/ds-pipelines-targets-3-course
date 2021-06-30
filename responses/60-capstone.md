@@ -4,17 +4,17 @@ In this issue you will:
 
 * Expand the pipeline to include all of the U.S. states and some territories
 * Learn one more method for making pipelines more robust to internet failures
-* Modify the pipeline to describe temperature sites instead of discharge sites
 * Practice the other branching method, dynamic branching 
+* Modify the pipeline to describe temperature sites instead of discharge sites
 
 ### :keyboard: Activity: Check for targets udpates
 
 Before you get started, make sure you have the most up-to-date version of **targets**:
 ```r
 packageVersion('targets')
-## [1] ‘0.4.2’
+## [1] ‘0.5.0.9002’
 ```
-You should have package version >= 0.4.2. If you don't, reinstall with:
+You should have package version >= 0.5.0.9002. If you don't, reinstall with:
 ```r
-remotes::install_github('USGS-R/scipiper')
+remotes::install_github('ropensci/targets')
 ```
