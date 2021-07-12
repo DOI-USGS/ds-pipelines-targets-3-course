@@ -42,21 +42,21 @@ summarize_targets <- function(ind_file, ...) {
   tar_combine(
     summary_state_timeseries_csv,
     mapped_by_state_targets,
-    command = summarize_targets('3_visualize/out/summary_state_timeseries.csv', !!!.x),
+    command = summarize_targets('3_visualize/log/summary_state_timeseries.csv', !!!.x),
     format="file"
   )
   ```
 
-- [ ] Run `tar_make()`. Inspect `'3_visualize/out/summary_state_timeseries.csv'`. Is that what you expect?
+- [ ] Run `tar_make()`. Inspect `'3_visualize/log/summary_state_timeseries.csv'`. Is that what you expect?
 
 #### Test and revise `summary_state_timeseries_csv`
 
-Hmm, you probably just discovered that *3_visualize/out/summary_state_timeseries.csv* used `summarize_targets()` for the `download`, `tally`, AND `plot` steps of the static branching. We could do that but what we really wanted to know was the metadata status for the plot file outputs only. 
+Hmm, you probably just discovered that *3_visualize/log/summary_state_timeseries.csv* used `summarize_targets()` for the `download`, `tally`, AND `plot` steps of the static branching. We could do that but what we really wanted to know was the metadata status for the plot file outputs only. 
 
 - [ ] Adjust the input to `tar_combine()` for `summary_state_timeseries_csv` so that ONLY the third step of `mapped_by_state_targets` is being passed into the combiner function.
 
-- [ ] Now run `tar_make()` again, and check out *3_visualize/out/summary_state_timeseries.csv* once more. Do you only have the PNG files showing up now?
+- [ ] Now run `tar_make()` again, and check out *3_visualize/log/summary_state_timeseries.csv* once more. Do you only have the PNG files showing up now?
 
-When you're feeling confident, add a comment to this issue with the contents of *3_visualize/out/data_coverage.png* and *3_visualize/out/summary_state_timeseries.csv*.
+When you're feeling confident, add a comment to this issue with the contents of *3_visualize/out/data_coverage.png* and *3_visualize/log/summary_state_timeseries.csv*.
 
 <hr><h3 align="center">I'll respond when I see your comment.</h3>
