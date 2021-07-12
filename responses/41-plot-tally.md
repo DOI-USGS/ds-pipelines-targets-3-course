@@ -6,14 +6,14 @@ In *_targets.R*:
 
 - [ ] Add a new step right after `nwis_data`. It should create R object targets called `tally_WI`, `tally_MI`, etc., should call the `tally_site_obs()` function (also already defined for you in *2_process/src/tally_site_obs.R*), and should make use of the targets created in `nwis_data`.
 
-- [ ] We are about to add a third step to our static branching, where we create plot image files. First, we want to add our new file names to our branches defined in `values`. Add another column to the tibble called `state_plot_files` that includes *3_visualize/out/timeseries_WI.png*, *3_visualize/out/timeseries_MN.png*, etc. by editing`tibble(state_abb = states)` to be
+- [ ] We are about to add a fourth step to our static branching, where we create plot image files. First, we want to add our new file names to our branches defined in `values`. Add another column to the tibble called `state_plot_files` that includes *3_visualize/out/timeseries_WI.png*, *3_visualize/out/timeseries_MN.png*, etc. by editing`tibble(state_abb = states)` to be
 
 ```r
 tibble(state_abb = states) %>% 
   mutate(state_plot_files = sprintf("3_visualize/out/timeseries_%s.png", state_abb))
 ```
 
-- [ ] Add a third step to plot the data. This step should have a target name of `timeseries_png`, should call the `plot_site_data()` function (defined in *3_visualize/src/plot_site_data.R*), should use the image filename for each task stored in the `state_plot_files` column, and should make use of the targets created in `nwis_data` (no need to link to the `tally` targets).
+- [ ] Add a fourth step to plot the data. This step should have a target name of `timeseries_png`, should call the `plot_site_data()` function (defined in *3_visualize/src/plot_site_data.R*), should use the image filename for each task stored in the `state_plot_files` column, and should make use of the targets created in `nwis_data` (no need to link to the `tally` targets).
 
 - [ ] Make the two new function files (where `plot_site_data()` and `tally_site_obs()` are defined) available to the pipeline by adding `source()` calls to `_targets.R`.
 
