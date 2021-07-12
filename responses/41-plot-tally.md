@@ -32,7 +32,8 @@ tibble(state_abb = states) %>%
 - [ ] Load the value of `tally_IL` to a variable of the same name in your global environment (hint: `?tar_load()`)
 
 When you're feeling confident, add a comment to this issue with:
-* an image from one of the new plots in *3_visualize/out*, and
-* a printout of the first 10 lines of `tally_IL`.
+* an image from one of the new plots in *3_visualize/out*,
+* a printout of the first 10 lines of `tally_IL`, and
+* a copy of the image shown by `tar_visnetwork()`.
 
 <hr><h3 align="center">I'll respond when I see your comment.</h3>
