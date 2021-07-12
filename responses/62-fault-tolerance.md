@@ -27,9 +27,9 @@ Wrapping a target `command` with `retry()` will keep building that target until 
 
 - [ ] Add code to load the package *retry* at the top of your *_targets.R* file.
 
-- [ ] Wrap the `get_site_data()` function in your static branching code with `retry()`. The `retry()` function should look for the error message matching `"Ugh, the internet data transfer failed!"` and should rerun `get_site_data()` a maximum of 10 times. 
+- [ ] Wrap the `get_site_data()` function in your static branching code with `retry()`. The `retry()` function should look for the error message matching `"Ugh, the internet data transfer failed!"` and should rerun `get_site_data()` a maximum of 30 times. 
 
-- [ ] Now run `tar_make()`. It will redownload data for *all* of the states since we updated the `command` for `nwis_data`. It will take awhile since it is downloading all of them at least once and may need to retry some up to 10 times. Grab a tea or coffee while you wait (~ 10 min) - at least there's no babysitting needed!
+- [ ] Now run `tar_make()`. It will redownload data for *all* of the states since we updated the `command` for `nwis_data`. It will take awhile since it is downloading all of them at least once and may need to retry some up to 30 times. Grab a tea or coffee while you wait (~ 10 min) - at least there's no babysitting needed!
 
 #### Commit
 
