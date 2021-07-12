@@ -46,6 +46,7 @@ summarize_targets <- function(ind_file, ...) {
     format="file"
   )
   ```
+  Note the use of the `log/` directory. The template repo had already set up any `src/` and `out/` folders for you, but `3_visualize/log/` does not exist yet. Before you can build this target, you will need to create this directory. Otherwise, the pipeline will throw an error.
 
 - [ ] Run `tar_make()`. Inspect `'3_visualize/log/summary_state_timeseries.csv'`. Is that what you expect?
 
@@ -53,7 +54,7 @@ summarize_targets <- function(ind_file, ...) {
 
 Hmm, you probably just discovered that *3_visualize/log/summary_state_timeseries.csv* used `summarize_targets()` for the `download`, `tally`, AND `plot` steps of the static branching. We could do that but what we really wanted to know was the metadata status for the plot file outputs only. 
 
-- [ ] Adjust the input to `tar_combine()` for `summary_state_timeseries_csv` so that ONLY the third step of `mapped_by_state_targets` is being passed into the combiner function.
+- [ ] Adjust the input to `tar_combine()` for `summary_state_timeseries_csv` so that ONLY the timeseries plot step of `mapped_by_state_targets` is being passed into the combiner function.
 
 - [ ] Now run `tar_make()` again, and check out *3_visualize/log/summary_state_timeseries.csv* once more. Do you only have the PNG files showing up now?
 
