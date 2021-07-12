@@ -8,7 +8,7 @@ map_timeseries <- function(site_info, plot_info_csv, out_file) {
     left_join(select(site_info, state_cd, site_no, station_nm, dec_lat_va, dec_long_va, count_nu), by='state_cd')
 
   # prepare map aesthetics
-  marker_colors = c('white', 'lightred', 'red', 'darkred')
+  marker_colors = c('white', 'orange', 'lightred', 'red', 'darkred')
   map_info <- map_data %>% mutate(
     color = marker_colors[cut(count_nu, seq(min(count_nu)-1, max(count_nu), length.out=length(marker_colors)+1))],
     label = sprintf('%s: %s (Site %s, %0.0f Obs)', state_cd, station_nm, site_no, count_nu))
@@ -28,7 +28,7 @@ map_timeseries <- function(site_info, plot_info_csv, out_file) {
       icon = icons,
       popupOptions = popupOptions(maxWidth=600, max_height=300),
       popup = leafpop::popupImage(
-        map_info$filename, src='local', embed=TRUE, height=300, width=600)
+        map_info$filepath, src='local', embed=TRUE, height=300, width=600)
     )
 
   # save the map - seems to help to save to current working directory and then move

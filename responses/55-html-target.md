@@ -18,7 +18,7 @@ You're down to the last task for this issue! I hope you'll find this one rewardi
 
 It's finally time to submit your work.
 
-- [ ] Commit your code changes for this issue and make sure you're `.gitignore`ing the new analysis products (the .png and .html files). Push your changes to the GitHub repo.
+- [ ] Commit your code changes for this issue and make sure you're `.gitignore`ing the new analysis products (the .png and .html files), but include your new file in the `log/` directory. Push your changes to the GitHub repo.
 
 - [ ] Create a PR to merge the "{{ branch }}" branch into "main". Share a screenshot of *3_visualize/out/timeseries_map.html* and any thoughts you want to share in the PR description. 
 
