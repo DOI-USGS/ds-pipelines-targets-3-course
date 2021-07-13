@@ -64,7 +64,6 @@ When your tasks are predefined (e.g. states, a few basins, a specific set of use
 
 When your tasks could change based on previous parts of your pipeline, you should choose dynamic branching. Examples of this include iterating over files in a directory (the files could change!) or using an inventory of sites to then pull data (when the inventory reruns, it may return different sites). A con is not being able to visualize your branches ahead of time, but you can still inspect them by running `tar_pattern()`. A pro with dynamic branching is that it follows the same pattern as all of your other targets, by using `tar_target()` with just one additional argument specified. Another pro for dynamic branching is that your output from each branch is automatically combined into one target. 
 
-.............
 
 With that intro out of the way, let's get going on *implementing* code for branching already!
 

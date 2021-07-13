@@ -20,6 +20,6 @@ tar_make()
 
 You should now see targets being built called `nwis_inventory_WI`, `nwis_inventory_IL`, etc. It should redownload all of the data for WI, MN, MI, and IL (so rebuild `nwis_data_WI`, `nwis_data_MI`, etc) because we changed the inputs and the function for those targets. The real magic comes next.
 
-If you're not quite getting the build to work, keep editing until you have it. When you've got it, copy and paste the console output of `tar_make()` into a comment on this issue.
+If you're not quite getting the build to work, keep editing until you have it (but remember that there may still be "internet transfer failures" which require you to run `tar_make()` a few times). When you've got it, copy and paste the console output of `tar_make()` and `tar_visnetwork()` into a comment on this issue.
 
 <hr><h3 align="center">I'll respond when I see your comment.</h3>

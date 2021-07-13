@@ -2,7 +2,7 @@ You're down to the last task for this issue! I hope you'll find this one rewardi
 
 #### Use the plots downstream
 
-- [ ] Add another target to *_targets.R* that uses the function `map_timeseries()` (defined for you in `3_visualize`). `site_info` should be `oldest_active_sites`, `plot_info` should be `summary_state_timeseries_csv`, and the output should be written to `3_visualize/out/timeseries_map.html`.
+- [ ] Add another target to *_targets.R* that uses the function `map_timeseries()` (defined for you in `3_visualize`). `site_info` should be `oldest_active_sites`, `plot_info` should be `summary_state_timeseries_csv`, and the output should be written to `3_visualize/out/timeseries_map.html`. Name this target appropriately and put as the final target in your list.
 
 - [ ] Add the three packages that `map_timeseries()` requires to the declaration in `tar_option_set()` at the top of *_targets.R*: `leaflet`, `leafpop`, and `htmlwidgets`.
 
@@ -18,7 +18,7 @@ You're down to the last task for this issue! I hope you'll find this one rewardi
 
 It's finally time to submit your work.
 
-- [ ] Commit your code changes for this issue and make sure you're `.gitignore`ing the new analysis products (the .png and .html files). Push your changes to the GitHub repo.
+- [ ] Commit your code changes for this issue and make sure you're `.gitignore`ing the new analysis products (the .png and .html files), but include your new file in the `log/` directory. Push your changes to the GitHub repo.
 
 - [ ] Create a PR to merge the "{{ branch }}" branch into "main". Share a screenshot of *3_visualize/out/timeseries_map.html* and any thoughts you want to share in the PR description. 
 

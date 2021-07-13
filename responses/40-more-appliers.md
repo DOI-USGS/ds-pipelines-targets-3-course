@@ -30,7 +30,7 @@ tar_map(
 )
 ```
 
-There is already a hint at what we do to add an addition step ... *ahem* `#Insert step for tallying data here` and `#Insert step for plotting data here` *ahem*. So, you can include additional calls to `tar_target()` to add more appliers to your branches. If you want to use a previous step's output, just use the target name from that step and **targets** will appropriately pass only the output relevant to each task target between the steps within `tar_map()`. 
+We actually already have more than one step in our branching setup - `nwis_inventory` and `nwis_data`. This shows that you can include additional calls to `tar_target()` to add more appliers to your branches. If you want to use a previous step's output, just use the target name from that step and **targets** will appropriately pass only the output relevant to each task target between the steps within `tar_map()`. We are going to add a few more steps to our static branching and there is already a hint for where we will add these ... *ahem* `#Insert step for tallying data here` and `#Insert step for plotting data here` *ahem*. 
 
 #### Steps that require additional info per task
 
