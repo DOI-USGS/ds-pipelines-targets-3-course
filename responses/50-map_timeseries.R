@@ -2,7 +2,7 @@ map_timeseries <- function(site_info, plot_info_csv, out_file) {
   # libraries: leaflet, leafpop, htmlwidgets
 
   # prepare data
-  map_data <- readr::read_csv(plot_info_csv) %>%
+  map_data <- readr::read_csv(plot_info_csv, col_types=cols()) %>%
     extract(col='filepath', into='state_cd', regex='3_visualize/out/timeseries_([[:alpha:]]{2})\\.png', remove=FALSE) %>%
     select(state_cd, filepath) %>%
     left_join(select(site_info, state_cd, site_no, station_nm, dec_lat_va, dec_long_va, count_nu), by='state_cd')
