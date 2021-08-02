@@ -4,9 +4,10 @@ The splitter we're going to create in this issue will split `oldest_active_sites
 
 ### Background
 
-#### The slow way to split
+#### The object way to split
 
-In general, **targets** best practices require that each `command` creates exactly one output, either an R object or a file. To follow this policy, we *could* write a function that would take the full inventory and one state name and return a one-row table.
+So far in our pipeline, we already have an object that contains the inventory information for all of the states, `oldest_active_sites`. Now, we can write a splitter to take the full inventory and one state name and return a one-row table.
+
 ```r
 get_state_inventory <- function(sites_info, state) {
   site_info <- dplyr::filter(sites_info, state_cd == state)
@@ -20,13 +21,14 @@ tar_map(
   tar_target(nwis_data, get_site_data(nwis_inventory, state_abb, parameter))
 )
 ```
-...this works but means that `get_state_inventory()` is called for each of our task targets. Suppose that `sites_info` was a file that took a long time to read in - we've encountered cases like this for large spatial data files, for example - you'd have to re-open the file for each and every call to `get_state_inventory()`, which would be excruciatingly slow for a many-state pipeline.
 
-Fortunately, there's another way.
+#### The file way to split
 
-#### The fast way to split
+The "object way to split" described above works well in many cases, but note that `get_state_inventory()` is called for each of our task targets (so each state). Suppose that `oldest_active_sites` was a file that took a long time to read in - we've encountered cases like this for large spatial data files, for example - you'd have to re-open the file for each and every call to `get_state_inventory()`, which would be excruciatingly slow for a many-state pipeline. If you find yourself in that situation, you can approach "splitting" with files rather than objects.
 
-Instead of calling `get_state_inventory()` once for each state, we'll go ahead and write a single **splitter** function that accepts `oldest_active_sites` and creates a single-row table for each state. It will be faster to run because there will not be redundant reloading of the data to split. 
+Instead of calling `get_state_inventory()` once for each state, we could and write a single **splitter** function that accepts `oldest_active_sites` and writes a single-row table for each state. It will be faster to run because there will not be redundant reloading of the data that is needing to be split. This type of splitter would not be within your branching code and instead return a single summary table describing the state-specific files that were just created. 
+
+For this next exercise, the object method for splitting described before will suit our needs just fine. There is no need to create a single splitter function that saves state-specific files for now. We are mentioning it here so that you can be aware of the limitations of splitters and be aware that other options exist.
 
 #### Your mission
 

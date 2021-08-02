@@ -5,7 +5,7 @@
   tar_target(nwis_inventory, ),
   ```
 
-- [ ] Add a code to subset the rows in `oldest_active_sites` based on the branching variable, `state_abb`. Remember that `oldest_active_sites` has a column called `state_cd` containing the state abbreviations. Hint: go peek at the first line of the function `get_site_data()` in `1_fetch/src/get_site_data.R`.
+- [ ] Add code to subset the rows in `oldest_active_sites` based on the branching variable, `state_abb`. Remember that `oldest_active_sites` has a column called `state_cd` containing the state abbreviations. Hint: go peek at the first line of the function `get_site_data()` in `1_fetch/src/get_site_data.R`.
 
 - [ ] Edit your call for the `nwis_data` target to use `nwis_inventory` instead of `oldest_active_sites` to take advantage of your newly split data.
 

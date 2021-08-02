@@ -26,6 +26,10 @@ _* a printout of the first 10 lines of `IL_tally`_
 10 05572000 IL     1918    365
 ```
 
+_* a copy of the image shown by tar_visnetwork()._
+
+![visnetwork_image](https://user-images.githubusercontent.com/13220910/127886177-4c632f4f-67a9-4a81-9758-7f317d7c72b6.png)
+
 ### :keyboard: Activity: Spot the split-apply-combine (again)
 
 - [ ] Check out the code for `tally_site_obs()`. To strengthen your familiarity with the *split-apply-combine* paradigm, can you isolate the *split*, *apply*, and *combine* operations within this **tidyverse** expression?

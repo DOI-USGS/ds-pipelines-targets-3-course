@@ -32,6 +32,6 @@ The above notes are really just intended to raise your awareness about complicat
 
 - [ ] Build the full pipeline using `tar_make()`. Note the different console messages this time. It would be rare but there might be states that hit our `max_tries` cap of 30 and fail. This can create weird errors later in the pipeline. So, if you see some weird errors on some of the visualization steps, try running `tar_outdated()` to see if there are incomplete state data targets. If there are, no worries just run `tar_make()` again and it should complete.
 
-When everything has run successfully, use a comment to share the images from timeseries_KY.png, timeseries_VT.png, and data_coverage.png. Include any observations you want to share about the build.
+When everything has run successfully, use a comment to share the images from `timeseries_KY.png` and `data_coverage.png`. Take a second and peruse the other `timeseries_*.png` files. Did you find anything surprising? Include any observations you want to share about the build.
 
 <hr><h3 align="center">I'll respond when I see your comment.</h3>
