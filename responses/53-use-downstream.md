@@ -6,7 +6,7 @@ It's time to reap the rewards from your first combiner.
 
 - [ ] Test your new target by running `tar_make()`, then checking out *3_visualize/out/data_coverage.png*.
 
-- [ ] Test your new pipeline by removing a state from `states` and running `scmake()` once more. Did *3_visualize/out/data_coverage.png* get revised? If not, see if you can figure out how to make it so. Ask for help if you need it.
+- [ ] Test your new pipeline by removing a state from `states` and running `tar_make()` once more. Did *3_visualize/out/data_coverage.png* get revised? If not, see if you can figure out how to make it so. Ask for help if you need it.
 
 When you've got it, share the image in *3_visualize/out/data_coverage.png* as a comment.
 
