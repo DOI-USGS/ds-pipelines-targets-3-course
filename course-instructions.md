@@ -1,8 +1,5 @@
-Pipelines III: Many-task pipelines using targets
-
-In this course, you will learn the advanced practices for building robust pipelines using the R package targets when you have steps that need to be repeated many times.
-
-## 00 Overview
+<details>
+<summary><h2>Recognize the Unique Demands of Data-rich pipelines</h2></summary>
 
 In this course you'll learn about tools for data-intensive pipelines: how to download many datasets, run many models, or make many plots. Whereas a `for` loop would work for many quick tasks, here our focus is on tools for managing sets of larger tasks that each take a long time and/or are subject to occasional failure.
 
@@ -18,23 +15,16 @@ There can be variations on this basic paradigm, especially for larger projects:
 1. Sometimes we have several *Apply* steps - for example, for each site you might want to munge the data, fit a model, extract the model parameters, _and_ make a diagnostic plot specific to that site.
 1. The *Combine* step isn't always necessary to the analysis - for example, we may prefer to publish a collection of plot .png files, one per site, rather than combining all the site plots into a single unweildy report file. That said, we may still find it useful to _also_ create a table summarizing which plots were created successfully and which were not.
 
+### Setting Up Your Repo
 
-Assign yourself to this issue to explore the split-apply-combine paradigm further.
-
-<hr>
-<h3 align="center">I, the Learning Lab Bot, will sit patiently until you've assigned yourself to this issue.<p><p><em>Please remember to be patient with me, too - sometimes I need a few seconds and/or a refresh before you'll see my response.</em></h3>
-
-
-## 01 setup repo
-
-Great, here we go! You'll be revising files in this repository shortly. To follow a process similar to our team's standard git workflow, you should first clone this training repository to your local machine so that you can make file changes and commits there. 
+You'll be revising files in this repository shortly. To follow a process similar to our team's standard git workflow, you should first clone this training repository to your local machine so that you can make file changes and commits there. 
 
 ### :keyboard: Activity: Set up your local repository
 
 Open a git bash shell (Windows) or a terminal window (Mac) and change (`cd`) into the directory you work in for projects in R (for me, this is `~/Documents/Code`). There, clone the repository and set your working directory to the new project folder that was created:
 ```
-git clone git@github.com:{{ user.username }}/{{ repo }}.git
-cd {{ repo }}
+git clone git@github.com:<user-name>/ds-pipelines-3-course-static.git
+cd ds-pipelines-3-course-static
 ```
 
 ### :keyboard: Activity: Install packages as needed
@@ -62,19 +52,31 @@ One of the course coordinators was named as your contact for this course. They w
 
 ![How to invite reviewers](https://user-images.githubusercontent.com/12039957/83422503-9fb65e00-a3f7-11ea-8e06-ad87c813247e.png)
 
-<hr><h3 align="center">When you're set up locally, close this issue.</h3>
+</details>
 
+<hr>
 
-## 10 no table
+<details>
+<summary><h2>Meet the Example Problem</h2></summary>
 
-It's time to meet the data analysis challenge for this course! Over the next series of issues, you'll connect with the [USGS National Water Information System (NWIS)](https://waterdata.usgs.gov/nwis) web service to learn about some of the longest-running monitoring stations in USGS streamgaging history.
+It's time to meet the data analysis challenge for this course! Over the next series of lessons, you'll connect with the [USGS National Water Information System (NWIS)](https://waterdata.usgs.gov/nwis) web service to learn about some of the longest-running monitoring stations in USGS streamgaging history.
 
 The repository for this course is already set up with a basic **targets** data pipeline that:
 * Queries NWIS to find the oldest discharge gage in each of three Upper Midwest states
 * Maps the state-winner gages
 
+### :keyboard: Activity: Switch to a new branch
 
-## 11 explore pipelines
+Before you edit any code, create a local branch called "three-states" and push that branch up to the remote location "origin" (which is the github host of your repository).
+
+```
+git checkout main
+git pull origin main
+git checkout -b three-states
+git push -u origin three-states
+```
+
+The first two lines aren't strictly necessary when you don't have any new branches, but it's a good habit to head back to `main` and sync with "origin" whenever you're transitioning between branches and/or PRs.
 
 ### :keyboard: Activity: Explore the starter pipeline
 
@@ -91,12 +93,7 @@ Without modifying any code, start by inspecting and running the existing data pi
 * If you want to make sure you have the most up-to-date version of the target, you can have **targets** check for currentness or rebuild first by running `tar_make(mytarget)` and then using `tar_load(mytarget)`.
 * You'll pretty much always want to call `library(targets)` in your R session while developing pipeline code - otherwise, you need to call `targets::tar_make()` in place of `tar_make()` anytime you run that command, and all that extra typing can add up.
 
-When you're satisfied that you understand the current pipeline, include the value of `oldest_active_sites$site_no` and the image from *site_map.png* in a comment on this issue.
-
-<hr><h3 align="center">Add a comment to this issue to proceed.</h3>
-
-
-## 12 explore purrr
+When you're satisfied that you understand the current pipeline, note the value of `oldest_active_sites$site_no` and the image from *site_map.png* in an issue.
 
 ### :keyboard: Activity: Spot the split-apply-combine
 
@@ -117,11 +114,6 @@ and it all happened in just one line! The *split-apply-combine* operations we'll
 
 Check out the documentation for `map_df` at `?purrr::map_df` or [online here](https://purrr.tidyverse.org/reference/map.html) if this function is new to you.
 
-<hr><h3 align="center">When you're ready, comment again on this issue.</h3>
-
-
-## 13 state by state
-
 ### :keyboard: Activity: Apply a downloading function to each state
 
 Awesome, time for your first code changes :pencil2:.
@@ -136,31 +128,35 @@ Awesome, time for your first code changes :pencil2:.
 
 When you're satisfied with your code, open a PR to merge the "three-states" branch into "main". Make sure to add `_targets/*`, `3_visualize/out/*`, and any *.DS_Store* files to your `.gitignore` file before committing anything. In the description box for your PR, include a screenshot or transcript of your console session where the targets get built.
 
-<hr><h3 align="center">I'll respond in your new PR. You may need to refresh the PR page to see my response.</h3>
+</details>
 
+<hr>
 
-## 14 retro
+<details>
+<summary><h2>Make Targets for Oldest Gage Sites</h2></summary>
 
 Congrats, your PR is open! 
 
-Did you have to run `tar_make()` more than once to get the build to complete? I set up the repo so that would be likely. Note that you *didn't* have to change your code or figure out which targets failed before calling `tar_make()` again - that's the beauty of a formal data pipeline. But you *did* (probably) have to call `tar_make()` several times...that's the inefficiency that we'll be tackling in the next issue. Stay tuned! :popcorn:
+Did you have to run `tar_make()` more than once to get the build to complete? I set up the repo so that would be likely. Note that you *didn't* have to change your code or figure out which targets failed before calling `tar_make()` again - that's the beauty of a formal data pipeline. But you *did* (probably) have to call `tar_make()` several times...that's the inefficiency that we'll be tackling in the next section. Stay tuned! :popcorn:
 
 ### :keyboard: Activity: Get this PR reviewed
 
-You've probably coded things correctly to resolve #{{ issue_num }}...but to follow our best practices, you should still ask someone else to do a review and merge when they agree it's ready.
+You've probably coded things correctly to resolve the issues presented earlier...but to follow our best practices, you should still ask someone else to do a review and merge when they agree it's ready.
 
 Assign your course contact to review and merge your PR (after any revisions that may be needed). Also add comments to this PR or in Teams with any questions that have come up.
 
-<hr><h3 align="center">I'll respond when I detect that your PR has been merged.</h3>
+</details>
 
+<hr>
 
-## branching
+<details>
+<summary><h2>Branching</h2></summary>
 
-In the last issue you noted some inefficiencies with writing out many nearly-identical targets within a remake.yml:
+In the last section you noted some inefficiencies with writing out many nearly-identical targets within a remake.yml:
 1. It's a pain (more typing and potentially a very long *_targets.R* file) to add new sites.
 2. Potential for errors (more typing, more copy/paste = more room for making mistakes).
 
-In this issue we'll fix those inefficiencies by adopting the *branching* approach supported by **targets** and the support package **tarchetypes**.
+In this section we'll fix those inefficiencies by adopting the *branching* approach supported by **targets** and the support package **tarchetypes**.
 
 ### Definitions
 
@@ -172,10 +168,22 @@ In the example analysis for this course, each task is a state and the first step
 
 We implement branching in two ways: as **static branching**, where the task targets are predefined before the pipeline runs, and **dynamic branching**, where task targets are defined while the pipeline runs.
 
-In this issue you'll adjust the existing pipelining to use branching for this analysis of USGS's oldest gages.
+In this section you'll adjust the existing pipelining to use branching for this analysis of USGS's oldest gages.
 
+### :keyboard: Activity: Switch to a new branch
 
-## 21 dynamic static branching
+Before you edit any code, create a local branch called "static-branching" and push that branch up to the remote location "origin" (which is the github host of your repository).
+
+```
+git checkout main
+git pull origin main
+git checkout -b static-branching
+git push -u origin static-branching
+```
+
+The first two lines aren't strictly necessary when you don't have any new branches, but it's a good habit to head back to `main` and sync with "origin" whenever you're transitioning between branches and/or PRs.
+
+<hr>
 
 Before we get to editing, let's briefly discuss the differences between static and dynamic branching, and how you choose between them.
 
@@ -205,7 +213,7 @@ list(
 )
 ```
 
-### Static branching:
+### Static branching
 
 In static branching, your **tasks** are defined by a named list or data.frame passed into your branching command. This is *static* because the tasks created won't update with the pipeline. You would need to update the list or data.frame. Read more about the key parts of static branching below.
 
@@ -246,11 +254,7 @@ When your tasks could change based on previous parts of your pipeline, you shoul
 
 With that intro out of the way, let's get going on *implementing* code for branching already!
 
-<hr><h3 align="center">Add a comment to this issue to proceed.</h3>
-
-
-## 22 implement branching
-
+<hr>
 
 Now that you have learned about branching, let's add it to our code. Currently, you have 3 individual targets that will download site data from our 3 Midwest states and store in a target named with the state name. Those targets look something like this:
 
@@ -260,7 +264,7 @@ tar_target(mn_data, get_site_data(oldest_active_sites, states[2], parameter)),
 tar_target(mi_data, get_site_data(oldest_active_sites, states[3], parameter)),
 ```
 
-We are going to convert the code for those targets into static branching. We are going to make these changes on the "{{ branch }}" branch that we created earlier. Let's get started!
+We are going to convert the code for those targets into static branching. We are going to make these changes on the branch that we created earlier. Let's get started!
 
 ### :keyboard: Activity: Implement static branching to download data by state
 
@@ -311,13 +315,9 @@ You can also use a function called `tar_manifest()` to check your pipeline befor
 5 site_map_png        "map_sites(\"3_visualize/out/site_map.png\", oldest_active_sites)" NA        
 ```
 
-If your pipeline doesn't look as you expect it should, keep iterating on your code in the `_targets.R` file. When you're happy with your pipeline, run `tar_manifest(starts_with('nwis_data'))` to see the details for just the branches. Copy and paste the output into a new comment on this issue.
+If your pipeline doesn't look as you expect it should, keep iterating on your code in the `_targets.R` file. When you're happy with your pipeline, run `tar_manifest(starts_with('nwis_data'))` to see the details for just the branches.
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 23 build pipelines
-
+<hr>
 
 Now that you have branching set up for downloading data from NWIS, it is time to run the pipeline!
 
@@ -344,12 +344,7 @@ If you're not there yet, keep trying until your output has only `*` or `v` next 
 
 3. Make a small change to the `get_site_data()` function: change `Sys.sleep(2)` to `Sys.sleep(0.5)`. Then call `tar_make()` again (and again and again if you get [pretend] internet failures). What happened?
 
-Answer the questions from 2 and 3 above in a new comment on this issue.
-
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 24 problems remain
+Answer the questions from 2 and 3 above for yourself.
 
 #### Check your progress
 
@@ -363,20 +358,22 @@ _Q: 3. Make a small change to the `get_site_data()` function: change `Sys.sleep(
 
 A: It skipped `oldest_active_sites` and then rebuilt each of the branches, `nwis_data_MI`, `nwis_data_MN`, `nwis_data_WI`, and `nwis_data_IL`. **targets** knows that the function updated and that these targets depend on that function. So cool! But the change we made doesn't actually change the output files from this function, but **targets** doesn't know that; it noticed a change in the function and rebuilt all of the targets that used it. The good thing is that any targets that depend on these `nwis_data_` targets would not rebuild because they wouldn't have changed since the last build. Also a reminder as to why it is a good idea to keep functions focused on smaller, specific activities. The more that the function does, the more opportunities there are for you to make updates/fixes/improvements, and you may end up rebuilding more than you want to. 
 
-We'll deal with (2) in the next issue.
+We'll deal with (2) in the next section.
 
 ### :keyboard: Activity: Create a PR with your new branching technique
 
-You now have a functioning pipeline that uses branching to download data for the oldest USGS streamgage in 4 different states! Go ahead and commit these changes to `_targets.R` to your "{{ branch }}"" branch and then open a Pull Request.
+You now have a functioning pipeline that uses branching to download data for the oldest USGS streamgage in 4 different states! Go ahead and commit these changes to `_targets.R` to your branch and then open a Pull Request. Now assign your course contact to review your PR. Either they or you can merge after any comments or change requests have been resolved.
 
-<hr><h3 align="center">I'll respond when I see your PR.</h3>
+</details>
 
+<hr>
 
-## 30 about splitters
+<details>
+<summary><h2>Splitters</h2></summary>
 
-In the last issue you noted a lingering inefficiency: When you added Illinois to the `states` vector, your branching pipeline built `nwis_data_WI`, `nwis_data_MN`, and `nwis_data_MI` again even though there was no need to download those files again. This happened because those three targets each depend on `oldest_active_sites`, the inventory target, and that target changed to include information about a gage in Illinois. As I noted in that issue, it would be ideal if each task branch only depended on exactly the values that determine whether the data need to be downloaded again. But we need a new tool to get there: a **splitter**.
+In the last section you noted a lingering inefficiency: When you added Illinois to the `states` vector, your branching pipeline built `nwis_data_WI`, `nwis_data_MN`, and `nwis_data_MI` again even though there was no need to download those files again. This happened because those three targets each depend on `oldest_active_sites`, the inventory target, and that target changed to include information about a gage in Illinois. As I noted in that section, it would be ideal if each task branch only depended on exactly the values that determine whether the data need to be downloaded again. But we need a new tool to get there: a **splitter**.
 
-The splitter we're going to create in this issue will split `oldest_active_sites` into a separate table for each state. In this case each table will be just one row long, but there are plenty of situations where the inputs to a set of tasks will be larger, even after splitting into task-size chunks. Some splitters will be quick to run and others will take a while, but either way, we'll be saving ourselves time in the overall pipeline!
+The splitter we're going to create in this section will split `oldest_active_sites` into a separate table for each state. In this case each table will be just one row long, but there are plenty of situations where the inputs to a set of tasks will be larger, even after splitting into task-size chunks. Some splitters will be quick to run and others will take a while, but either way, we'll be saving ourselves time in the overall pipeline!
 
 ### Background
 
@@ -389,6 +386,7 @@ get_state_inventory <- function(sites_info, state) {
   site_info <- dplyr::filter(sites_info, state_cd == state)
 }
 ```
+
 And then we could insert an initial branching step where we pulled out that state's information before passing it to the next step, such that our `tar_map()` call would look like:
 ```r
 tar_map(
@@ -408,12 +406,26 @@ For this next exercise, the object method for splitting described before will su
 
 #### Your mission
 
-In this issue you'll create a splitter to make your task table more efficient in the face of a changing inventory in `oldest_active_sites`. Your splitter function will generate separate one-row inventory data for each state.
+In this section you'll create a splitter to make your task table more efficient in the face of a changing inventory in `oldest_active_sites`. Your splitter function will generate separate one-row inventory data for each state.
 
 Ready?
 
+<hr>
 
-## 31 go bananas
+### :keyboard: Activity: Switch to a new branch
+
+Before you edit any code, create a local branch called "splitter" and push that branch up to the remote location "origin" (which is the github host of your repository).
+
+```
+git checkout main
+git pull origin main
+git checkout -b splitter
+git push -u origin splitter
+```
+
+The first two lines aren't strictly necessary when you don't have any new branches, but it's a good habit to head back to `main` and sync with "origin" whenever you're transitioning between branches and/or PRs.
+
+<hr>
 
 ### :keyboard: Activity: Create a separate inventory for each state
 
@@ -437,11 +449,9 @@ tar_make()
 
 You should now see targets being built called `nwis_inventory_WI`, `nwis_inventory_IL`, etc. It should redownload all of the data for WI, MN, MI, and IL (so rebuild `nwis_data_WI`, `nwis_data_MI`, etc) because we changed the inputs and the function for those targets. The real magic comes next.
 
-If you're not quite getting the build to work, keep editing until you have it (but remember that there may still be "internet transfer failures" which require you to run `tar_make()` a few times). When you've got it, copy and paste the console output of `tar_make()` and `tar_visnetwork()` into a comment on this issue.
+If you're not quite getting the build to work, keep editing until you have it (but remember that there may still be "internet transfer failures" which require you to run `tar_make()` a few times). When you've got it, copy and paste the console output of `tar_make()` and `tar_visnetwork()` into an issue.
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-## 32 test splitter
+<hr>
 
 ### :keyboard: Activity: Test your splitter's power
 
@@ -461,22 +471,24 @@ Comfortable with your pipeline's behavior? Time for a PR!
 
 - [ ] Commit your changes to *1_fetch/src/get_site_data.R*, and *_targets.R*. Use `git push` to push your change up to the "splitter" branch on GitHub.
 
-When everything is committed and pushed, create a pull request on GitHub. In your PR description note which targets got built when you added `IN` and `IA` to `states`.
+When everything is committed and pushed, create a pull request on GitHub. In your PR description note which targets got built when you added `IN` and `IA` to `states` and copy/paste the console output of `tar_make()` and `tar_visnetwork()`.
 
-<hr><h3 align="center">I'll respond on your new PR once I spot it.</h3>
+</details>
 
+<hr>
 
-## 40 more appliers
+<details>
+<summary><h2>Appliers</h2></summary>
 
 Your pipeline is looking pretty good! Now it's time to add complexity. I've just added these two files to the repository:
 * *2_process/src/tally_site_obs.R*
 * *3_visualize/src/plot_site_data.R*
 
-In this issue you'll add these functions to the branching code in the form of two new steps.
+In this section you'll add these functions to the branching code in the form of two new steps.
 
 ### Background
 
-The goal of this issue is to expose you to **multi-step branching**. They're not hugely different from the single-step branching we've already implemented, but there are a few details that you haven't seen yet. The changes you'll make for this issue will also set us up to touch on some miscellaneous pipeline topics. Briefly, we'll cover:
+The goal of this section is to expose you to **multi-step branching**. They're not hugely different from the single-step branching we've already implemented, but there are a few details that you haven't seen yet. The changes you'll make for this section will also set us up to touch on some miscellaneous pipeline topics. Briefly, we'll cover:
 
 * The syntax for adding multiple steps
 * How to declare dependencies among steps within branching
@@ -506,8 +518,22 @@ We actually already have more than one step in our branching setup - `nwis_inven
 
 So far, we have used functions in static branching that only needed our state abbreviation, e.g. "WI" or "IL". What happens when we want to have other information used per task? For example, we need to save files per task and we want those to be passed into our step function. Easy! We can just edit the information we pass in for `values`. Currently, we are using a single-column `tibble` but that can easily have multiple columns and those columns can be used as arguments to `tar_target()` commands within `tar_map()`. We will try this out next!
 
+<hr>
 
-## 41 plot tally
+### :keyboard: Activity: Switch to a new branch
+
+Before you edit any code, create a local branch called "appliers" and push that branch up to the remote location "origin" (which is the github host of your repository).
+
+```
+git checkout main
+git pull origin main
+git checkout -b appliers
+git push -u origin appliers
+```
+
+The first two lines aren't strictly necessary when you don't have any new branches, but it's a good habit to head back to `main` and sync with "origin" whenever you're transitioning between branches and/or PRs.
+
+<hr>
 
 ### :keyboard: Activity: Add two new appliers
 
@@ -542,19 +568,16 @@ tibble(state_abb = states) %>%
 
 - [ ] Load the value of `tally_IL` to a variable of the same name in your global environment (hint: `?tar_load()`)
 
-When you're feeling confident, add a comment to this issue with:
+When you're feeling confident, creat the following outputs for comparison:
 * an image from one of the new plots in *3_visualize/out*,
 * a printout of the first 10 lines of `tally_IL`, and
 * a copy of the image shown by `tar_visnetwork()`.
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 42 answers
+<hr>
 
 #### Check your progress
 
-To help you assess your pipeline, here's what I would have put in that comment:
+To help you assess your pipeline, here's what the expected outputs should look like:
 
 _* an image from one of the new plots in *3_visualize/out*, and_
 
@@ -584,6 +607,8 @@ _* a copy of the image shown by tar_visnetwork()._
 
 ![visnetwork_image](https://user-images.githubusercontent.com/13220910/127886177-4c632f4f-67a9-4a81-9758-7f317d7c72b6.png)
 
+<hr>
+
 ### :keyboard: Activity: Spot the split-apply-combine (again)
 
 - [ ] Check out the code for `tally_site_obs()`. To strengthen your familiarity with the *split-apply-combine* paradigm, can you isolate the *split*, *apply*, and *combine* operations within this **tidyverse** expression?
@@ -595,12 +620,7 @@ site_data %>%
   summarize(NumObs = length(which(!is.na(Value))))
 ```
 
-Give your answer to the activity in a comment on this issue.
-
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 43 revise build
+<hr>
 
 #### Check your progress
 
@@ -623,6 +643,8 @@ summarize()
 
 It's amazing how concise these actions can be in **tidyverse**, don't you think? The **targets** version would require more code to do the exact same operation, but it brings the special benefit of only (re)building those elements that aren't already up to date.
 
+<hr> 
+
 ### :keyboard: Activity: Revise and rebuild a step
 
 The timeseries plots aren't meant to be publication quality, but it would be nice to touch them up just a bit.
@@ -631,12 +653,9 @@ The timeseries plots aren't meant to be publication quality, but it would be nic
 
 - [ ] Run `tar_make()` to build the plots again. Only the targets `timeseries_png_WI`, `timeseries_png_MN`, etc should have built. Everything else should have been skipped.
 
-- [ ] Copy your console output from the `tar_make()` you just ran and one of the updated plots as a comment on this issue.
+- [ ] Copy your console output from the `tar_make()` you just ran and one of the updated plots for a comparison to the expected output.
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 44 skipping power
+<hr> 
 
 #### Check your progress
 
@@ -686,24 +705,30 @@ v skip target tally_IA
 * end pipeline
 ```
 
-_Copy ... one of the updated plots as a comment on this issue_
+_Copy ... one of the updated plots for a comparison to the expected output_
 
 I edited `ggtitle(site_data$Site[1])` to be `ggtitle(sprintf("%s-%s", site_data$State[1], site_data$Site[1]))`, so my updated plot looks like
 
 ![updated_wi_plot](https://user-images.githubusercontent.com/13220910/119910012-d1370c00-bf1b-11eb-926e-05c69be70837.png)
 
+<hr>
+
 ### :keyboard: Activity: Merge your new appliers
 
 Now that we've added these new appliers and thoroughly tested them, your code is ready for a pull request. Go for it!
 
-<hr><h3 align="center">I'll respond when I see your PR.</h3>
+Now assign your course contact to review your PR. Either they or you can merge after any comments or change requests have been resolved.
 
+</details>
 
-## 50 combiners
+<hr>
+
+<details>
+<summary><h2>Combiners</h2></summary>
 
 So far we've implemented *split* and *apply* operations; now it's time to explore *combine* operations in **targets** pipelines.
 
-In this issue you'll add two *combiners* to serve different purposes - the first will combine all of the annual observation tallies into one giant table, and the second will summarize the set of state-specific timeseries plots generated by the task table. 
+In this section you'll add two *combiners* to serve different purposes - the first will combine all of the annual observation tallies into one giant table, and the second will summarize the set of state-specific timeseries plots generated by the task table. 
 
 ### Background
 
@@ -729,8 +754,22 @@ Some additional implementation considerations:
 
 Don't worry if not all of this clicked yet. We are about to see it all in action!
 
+<hr>
 
-## 51 code a combiner
+### :keyboard: Activity: Switch to a new branch
+
+Before you edit any code, create a local branch called "combiners" and push that branch up to the remote location "origin" (which is the github host of your repository).
+
+```
+git checkout main
+git pull origin main
+git checkout -b combiners
+git push -u origin combiners
+```
+
+The first two lines aren't strictly necessary when you don't have any new branches, but it's a good habit to head back to `main` and sync with "origin" whenever you're transitioning between branches and/or PRs.
+
+<hr>
 
 ### :keyboard: Activity: Add a data combiner
 
@@ -773,16 +812,9 @@ Don't worry if not all of this clicked yet. We are about to see it all in action
 
 #### Test
 
-Run `tar_make()` and then `tar_load(obs_tallies)`. Inspect the value of `obs_tallies`. Is it what you expected?
+Run `tar_make()` and then `tar_load(obs_tallies)`. Inspect the value of `obs_tallies`. Is it what you expected? Note your observations for a comparison with the expected answer.
 
-When you're feeling confident, add a comment to this issue with your answer to the question above.
-
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 52 combiner progress check
-
-#### Check your progress
+<hr>
 
 _Inspect the value of `obs_tallies`. Is it what you expected?_
 
@@ -806,12 +838,7 @@ Here's what my `obs_tallies` looks like. Your number of rows might vary slightly
 # … with 728 more rows
 ```
 
-Comment on this issue when you're ready to proceed.
-
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 53 use downstream
+<hr>
 
 ### :keyboard: Activity: Use the combiner target downstream
 
@@ -823,12 +850,9 @@ It's time to reap the rewards from your first combiner.
 
 - [ ] Test your new pipeline by removing a state from `states` and running `tar_make()` once more. Did *3_visualize/out/data_coverage.png* get revised? If not, see if you can figure out how to make it so. Ask for help if you need it.
 
-When you've got it, share the image in *3_visualize/out/data_coverage.png* as a comment.
+When you've got it, review you image of *3_visualize/out/data_coverage.png*.
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 54 add another
+<hr>
 
 Great, you have a combiner hooked up from start to finish, and you probably learned some things along the way! It's time to add a second combiner that serves a different purpose - here, rather than produce a target that _contains_ the data of interest, we'll produce a combiner target that _summarizes_ the outputs of interest (in this case the state-specific .png files we've already created).
 
@@ -890,14 +914,11 @@ Hmm, you probably just discovered that *3_visualize/log/summary_state_timeseries
 
 - [ ] Now run `tar_make()` again, and check out *3_visualize/log/summary_state_timeseries.csv* once more. Do you only have the PNG files showing up now?
 
-When you're feeling confident, add a comment to this issue with the contents of *3_visualize/out/data_coverage.png*, *3_visualize/log/summary_state_timeseries.csv*, and the figure generated by `tar_visnetwork()`.
+When you're feeling confident, review the contents of *3_visualize/out/data_coverage.png*, *3_visualize/log/summary_state_timeseries.csv*, and the figure generated by `tar_visnetwork()`.
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
+<hr>
 
-
-## 55 html target
-
-You're down to the last task for this issue! I hope you'll find this one rewarding. After all your hard work, you're now in a position to create a **leaflet** map that will give you interactive access to the locations, identities, and timeseries plots of the Upper Midwest's oldest gages, all in one .html map. Ready?
+You're down to the last task for this section! I hope you'll find this one rewarding. After all your hard work, you're now in a position to create a **leaflet** map that will give you interactive access to the locations, identities, and timeseries plots of the Upper Midwest's oldest gages, all in one .html map. Ready?
 
 #### Use the plots downstream
 
@@ -917,18 +938,20 @@ You're down to the last task for this issue! I hope you'll find this one rewardi
 
 It's finally time to submit your work.
 
-- [ ] Commit your code changes for this issue and make sure you're `.gitignore`ing the new analysis products (the .png and .html files), but include your new file in the `log/` directory. Push your changes to the GitHub repo.
+- [ ] Commit your code changes for this section and make sure you're `.gitignore`ing the new analysis products (the .png and .html files), but include your new file in the `log/` directory. Push your changes to the GitHub repo.
 
 - [ ] Create a PR to merge the "{{ branch }}" branch into "main". Share a screenshot of *3_visualize/out/timeseries_map.html* and any thoughts you want to share in the PR description. 
 
-<hr><h3 align="center">I'll respond when I see your PR.</h3>
+</details>
 
+<hr>
 
-## 60 capstone
+<details>
+<summary><h2>Scale Up</h2></summary>
 
-Your pipeline is looking great, @{{ user.username }}! It's time to put it through its paces and experience the benefits of a well-plumbed pipeline. The larger your pipeline becomes, the more useful are the tools you've learned in this course.
+Your pipeline is looking great! It's time to put it through its paces and experience the benefits of a well-plumbed pipeline. The larger your pipeline becomes, the more useful are the tools you've learned in this course.
 
-In this issue you will:
+In this section you will:
 
 * Expand the pipeline to include all of the U.S. states and some territories
 * Learn one more method for making pipelines more robust to internet failures
@@ -947,8 +970,22 @@ You should have package version >= 0.5.0.9002. If you don't, reinstall with:
 remotes::install_github('ropensci/targets')
 ```
 
+<hr>
 
-## 61 expand states
+### :keyboard: Activity: Switch to a new branch
+
+Before you edit any code, create a local branch called "scale-up" and push that branch up to the remote location "origin" (which is the github host of your repository).
+
+```
+git checkout main
+git pull origin main
+git checkout -b scale-up
+git push -u origin scale-up
+```
+
+The first two lines aren't strictly necessary when you don't have any new branches, but it's a good habit to head back to `main` and sync with "origin" whenever you're transitioning between branches and/or PRs.
+
+<hr>
 
 ### :keyboard: Activity: Include all the states
 
@@ -973,13 +1010,9 @@ remotes::install_github('ropensci/targets')
   1. What are the odds of completing all the data pulls in a single call to `tar_make()`?
   2. How many calls to `tar_make()` should you expect to make before the pipeline is fully built?
 
-Comment on what you're seeing. 
+Comment to yourself on what you're seeing. 
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 62 fault tolerance
-
+<hr>
 
 ### :keyboard: Activity: Use fault tolerant approaches to running `tar_make()`
 
@@ -1015,14 +1048,9 @@ Wrapping a target `command` with `retry()` will keep building that target until 
 
 #### Commit
 
-- [ ] Commit and push your changes to GitHub. No need to make a PR yet, though; we'll keep working on this issue for a few more minutes first before getting human feedback.
+- [ ] Commit and push your changes to GitHub. No need to make a PR yet, though; we'll keep working on this section for a few more minutes first before getting human feedback.
 
-Comment once you've committed and pushed your changes to GitHub.
-
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 63 dynamic branching
+<hr> 
 
 You've just run a fully functioning pipeline with 212 unique branches (53 states x 4 steps)! Imagine if you had coded that with a `for` loop and just one of those states threw an error? :grimacing:
 
@@ -1087,18 +1115,15 @@ states <- c('AL','AZ','AR','CA','CO','CT','DE','DC','FL','GA','ID','IL','IN','IA
 
 #### Commit
 
-- [ ] Commit and push your changes to GitHub. No need to make a PR yet, though; we'll keep working on this issue for a few more minutes first before getting human feedback.
+- [ ] Commit and push your changes to GitHub. No need to make a PR yet, though; we'll keep working on this section for a few more minutes first before getting human feedback.
 
 Once you've committed and pushed your changes to GitHub, comment about some of the differences you notice when running this pipeline using the dynamic branching approach vs our original static branching approach. Include a screenshot of the result in your viewer from your last `tar_visnetwork()` showing your dynamic branching pipeline.
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
-
-
-## 64 repurpose pipelines
+<hr>
 
 This is fun, right? A strong test of code is whether it can be transferred to solve a slightly different problem, so now let's try applying this pipeline to water temperature data instead of discharge data.
 
-#### Background: Multiple git branches
+### Background: Multiple git branches
 
 I'm about to ask you to do a few tricky/interesting things here with respect to git. Let's acknowledge them even though we won't explore them fully in this course:
 
@@ -1130,13 +1155,15 @@ The above notes are really just intended to raise your awareness about complicat
 
 - [ ] Build the full pipeline using `tar_make()`. Note the different console messages this time. It would be rare but there might be states that hit our `max_tries` cap of 30 and fail. This can create weird errors later in the pipeline. So, if you see some weird errors on some of the visualization steps, try running `tar_outdated()` to see if there are incomplete state data targets. If there are, no worries just run `tar_make()` again and it should complete.
 
-When everything has run successfully, use a comment to share the images from `timeseries_KY.png` and `data_coverage.png`. Take a second and peruse the other `timeseries_*.png` files. Did you find anything surprising? Include any observations you want to share about the build.
+When everything has run successfully, review the images from `timeseries_KY.png` and `data_coverage.png`. Take a second and peruse the other `timeseries_*.png` files. Did you find anything surprising?
 
-<hr><h3 align="center">I'll respond when I see your comment.</h3>
+<hr> 
 
+That temperature data build should have worked pretty darn smoothly, with fault tolerance for those data pulls with simulated unreliability, a rebuild of everything that needed a rebuild, and console messages to inform you of progress through the pipeline. Yay!
 
-## 65 final tricks
+I'll just share a few additional thoughts and then we'll wrap up. 
 
+#### Ruminations and tricks
 
 **Orphaned task-step files:** You might have been disappointed to note that there's still a **timeseries_VT.png** hanging out in the repository even though VT is now excluded from the inventory and the summary maps. Worse still, that file shows *discharge* data! There's no way to use **targets** to discover and remove such orphaned artifacts of previous builds, because this is a file not connected to the new pipeline and **targets** doesn't even know that it exists. So it's a weakness of these pipelines that you may want to bear in mind, though this particular weakness has never caused big problems for us. Still, to avoid or fix it, you could:
 1. After building everything, sort the contents of *3_visualize/out* by datestamp and manually remove the files older than your switch to `parameter='00010'`.
@@ -1162,17 +1189,20 @@ Phew, what a lot you've learned in this course! Let's get your work onto GitHub.
 
 - [ ] Commit your code changes for the temperature analysis, remembering to commit to the new branch ("{{ second-branch }}"). Push your changes to GitHub. You won't make a PR for this branch - it can just live on as an alternative to the "main" branch that documents the changes needed to analyze temperature instead of discharge.
 
-- [ ] Create a PR to merge the "{{ first-branch }}" branch into "main". In the PR description, post your favorite figure produced during the course and any other observations you want to share.
+- [ ] Create a PR to merge your branch into "main". In the PR description, post your favorite figure produced during the course and any other observations you want to share.
 
-<hr><h3 align="center">I'll respond when I see your PR.</h3>
+</details>
 
-## What's Next
+<hr>
 
-Congratulations, @{{ user.username }}, you've finished the course! :sparkles:
+<details>
+<summary><h2>What's Next</h2></summary>
+
+Congratulations, you've finished the course! :sparkles:
 
 Now that you're on or working with the USGS Data Science team, you'll likely be using data pipelines like the one you explored here in your visualization and analysis projects. More questions will surely come up - when they do, you have some options:
 
 1. Visit the [targets](https://docs.ropensci.org/targets/) documentation pages and [The targets R Package User Manual](https://books.ropensci.org/targets/)
 1. If you're a member of the IIDD Data Science Branch, ask questions and share ideas in our *Function - Data Pipelines* Teams channel. If you're not a member, you are likely taking this course because you are working with someone who is. Reach out to them with questions/ideas.
 
-<hr><h3 align="center">You rock, @{{ user.username }}! Time for a well-deserved break.</h3>
+</details>
