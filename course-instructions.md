@@ -183,8 +183,11 @@ git push -u origin static-branching
 
 The first two lines aren't strictly necessary when you don't have any new branches, but it's a good habit to head back to `main` and sync with "origin" whenever you're transitioning between branches and/or PRs.
 
-<hr>
-
+---
+                     
+test
+                     
+<hr> 
 Before we get to editing, let's briefly discuss the differences between static and dynamic branching, and how you choose between them.
 
 ### Dynamic branching
