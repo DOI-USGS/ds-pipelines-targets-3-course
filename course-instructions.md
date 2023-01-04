@@ -1,5 +1,5 @@
 <details>
-<summary><h2>Recognize the Unique Demands of Data-rich pipelines</h2></summary>
+<summary><h2>Recognize the Unique Demands of Data-rich Pipelines</h2></summary>
 
 In this course you'll learn about tools for data-intensive pipelines: how to download many datasets, run many models, or make many plots. Whereas a `for` loop would work for many quick tasks, here our focus is on tools for managing sets of larger tasks that each take a long time and/or are subject to occasional failure.
 
