@@ -480,7 +480,7 @@ When everything is committed and pushed, create a pull request on GitHub. In you
 <details>
 <summary><h2>Appliers</h2></summary>
 
-Your pipeline is looking pretty good! Now it's time to add complexity. I've just added these two files to the repository:
+Your pipeline is looking pretty good! Now it's time to add complexity. You need to move the two files in `archive/additional_scripts` to the following paths from `archive/additional_scripts` to the following locations in the repository:
 * *2_process/src/tally_site_obs.R*
 * *3_visualize/src/plot_site_data.R*
 
